@@ -1,12 +1,15 @@
 import torch
 import torch.nn.functional as F
-from fastapi import APIRouter, UploadFile, File, HTTPException, status
+from fastapi import APIRouter, UploadFile, File, HTTPException, status, Request
+from app.core.security import limiter
 from app.services.preprocessor import validate_and_preprocess_image
 from app.services.model_service import model_service
 from app.services.gradcam_service import GradCAM
 from app.api.routes.diseases import disease_db
 from app.schemas.prediction_schema import PredectionResponse, PredictionItem, RemediationPlan
 from app.core.logger import logger
+import torch
+import torch.nn.functional as F
 
 router = APIRouter()
 
@@ -14,7 +17,8 @@ target_conv_layer = model_service.model.features[-1]
 grad_cam_engine = GradCAM(model_service.model, target_conv_layer)
 
 @router.post("", response_model=PredectionResponse, summary="Analyze leaf image and get diagnosis with remedies")
-async def predict_leaf_disease(file: UploadFile = File(...)):
+@limiter.limit("15/minute")
+async def predict_leaf_disease(request: Request, file: UploadFile = File(...)):
 
     tensor, raw_image = await validate_and_preprocess_image(file)
     tensor = tensor.to(model_service.device)

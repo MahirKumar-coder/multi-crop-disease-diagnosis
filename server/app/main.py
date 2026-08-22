@@ -2,9 +2,14 @@ import time
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+
 from app.core.config import settings
 from app.core.logger import logger
 from app.api.api_router import api_router
+from app.api.api_router import api_router
+from app.core.security import limiter, rate_limit_exceeded_handler
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -12,6 +17,9 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)
 
 # CORS Configuration
 app.add_middleware(
