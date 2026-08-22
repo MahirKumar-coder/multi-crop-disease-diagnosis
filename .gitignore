@@ -1,0 +1,85 @@
+# ==========================================
+# Environment Variables & Sensitive Keys
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Python & Virtual Environments
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments (root and nested)
+.venv/
+venv/
+ENV/
+env/
+server/.venv/
+server/venv/
+
+# ==========================================
+# Deep Learning Model Artifacts & Datasets
+# ==========================================
+*.pth
+*.pt
+*.onnx
+*.h5
+*.tflite
+*.pkl
+*.joblib
+*.weights
+dataset/
+datasets/
+PlantVillage/
+New Plant Diseases Dataset/
+*.zip
+*.tar.gz
+
+# ==========================================
+# Node / Frontend (React / Vite)
+# ==========================================
+node_modules/
+client/node_modules/
+.pnp
+.pnp.js
+coverage/
+client/dist/
+dist/
+.next/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# IDE & Operating System Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

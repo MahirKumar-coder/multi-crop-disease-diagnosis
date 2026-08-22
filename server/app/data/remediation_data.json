@@ -1,0 +1,77 @@
+{
+  "Apple___Apple_scab": {
+    "id": "Apple___Apple_scab",
+    "crop": "Apple",
+    "disease_name": "Apple Scab",
+    "scientific_name": "Venturia inaequalis",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Causes olive-green to black velvety spots on leaves and fruit, leading to premature leaf drop.",
+    "remediation": {
+      "organic": ["Rake and compost fallen leaves", "Apply sulfur or copper-based sprays early season", "Prune tree canopy for air circulation"],
+      "chemical": ["Apply Captan or Mancozeb fungicide", "Use Difenoconazole at green tip stage"],
+      "preventive": ["Plant scab-resistant cultivars", "Avoid overhead sprinkler irrigation"]
+    }
+  },
+  "Apple___Black_rot": {
+    "id": "Apple___Black_rot",
+    "crop": "Apple",
+    "disease_name": "Black Rot",
+    "scientific_name": "Botryosphaeria obtusa",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "High",
+    "description": "Produces frog-eye leaf spots and cankers on branches, causing dark rotted areas on fruit.",
+    "remediation": {
+      "organic": ["Prune out dead wood and cankers 6 inches below visible damage", "Remove mummified apples"],
+      "chemical": ["Apply Thiophanate-methyl or Captan from petal fall through harvest"],
+      "preventive": ["Maintain overall tree health", "Control insect damage that creates wounds"]
+    }
+  },
+  "Apple___healthy": {
+    "id": "Apple___healthy",
+    "crop": "Apple",
+    "disease_name": "Healthy Leaf",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Leaf tissues exhibit uniform pigmentation and no pathogenic infection.",
+    "remediation": {
+      "organic": ["Maintain balanced compost/organic nitrogen levels"],
+      "chemical": ["No chemical treatment required"],
+      "preventive": ["Regular field scouting and balanced irrigation"]
+    }
+  },
+  "Tomato___Late_blight": {
+    "id": "Tomato___Late_blight",
+    "crop": "Tomato",
+    "disease_name": "Late Blight",
+    "scientific_name": "Phytophthora infestans",
+    "is_healthy": false,
+    "pathogen_type": "Fungal/Oomycete",
+    "severity": "High",
+    "description": "Causes large, irregular dark water-soaked lesions on leaves and white fungal growth on undersides.",
+    "remediation": {
+      "organic": ["Destroy and discard infected plants immediately", "Apply copper hydroxide preventive sprays"],
+      "chemical": ["Apply Chlorothalonil or Metalaxyl-M fungicides"],
+      "preventive": ["Provide adequate plant spacing", "Water only at base using drip irrigation"]
+    }
+  },
+  "Tomato___healthy": {
+    "id": "Tomato___healthy",
+    "crop": "Tomato",
+    "disease_name": "Healthy Leaf",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Vibrant green foliage showing no chlorosis or necrosis.",
+    "remediation": {
+      "organic": ["Apply neem oil spray periodically as a general prophylactic"],
+      "chemical": ["No chemical application needed"],
+      "preventive": ["Ensure proper staking and crop rotation"]
+    }
+  }
+}
