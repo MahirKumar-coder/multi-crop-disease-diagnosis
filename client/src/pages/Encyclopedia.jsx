@@ -40,7 +40,7 @@ const Encyclopedia = () => {
   useEffect(() => {
     getAllDiseases()
       .then(res => {
-        const data = Array.isArray(res.data) ? res.data : res.data.diseases || fallbackData;
+        const data = Array.isArray(res.data) ? res.data : (res.data.items || res.data.diseases || fallbackData);
         setDiseases(data);
         setLoading(false);
       })
@@ -74,8 +74,14 @@ const Encyclopedia = () => {
               onClick={() => setSelectedDisease(disease)} // Click karne par popup set hoga
               className="bg-white p-5 shadow-sm rounded-lg border-l-4 border-green-500 hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1 relative group"
             >
-              <h3 className="font-bold text-lg text-gray-800 group-hover:text-green-700 transition-colors">{disease.name}</h3>
-              {disease.type && <p className="text-sm text-gray-500 mt-1">Type: {disease.type}</p>}
+              <h3 className="font-bold text-lg text-gray-800 group-hover:text-green-700 transition-colors">
+                {disease.disease_name || disease.name}
+              </h3>
+              {(disease.pathogen_type || disease.type) && (
+                <p className="text-sm text-gray-500 mt-1">
+                  Type: {disease.pathogen_type || disease.type}
+                </p>
+              )}
               
               {/* Naya 'Click to view' text jo hover karne par highlight hoga */}
               <p className="text-xs text-green-600 mt-3 font-semibold flex items-center gap-1 opacity-70 group-hover:opacity-100">
@@ -103,21 +109,60 @@ const Encyclopedia = () => {
               &times;
             </button>
             
-            <h2 className="text-2xl font-bold text-gray-800 mb-2 pr-8">{selectedDisease.name}</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2 pr-8">
+              {selectedDisease.disease_name || selectedDisease.name}
+            </h2>
             
             <span className="inline-block bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full mb-6 font-semibold border border-green-200">
-              {selectedDisease.type || "Unknown Type"}
+              {selectedDisease.pathogen_type || selectedDisease.type || "Unknown Type"}
             </span>
             
-            <div className="space-y-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-100">
+            <div className="space-y-4 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-100 max-h-[60vh] overflow-y-auto">
               <p>
                 <strong className="block text-gray-900 mb-1 text-base">Description:</strong> 
                 {selectedDisease.description || "Detailed description is not available in the database right now."}
               </p>
-              <p>
-                <strong className="block text-gray-900 mb-1 text-base">Recommended Action:</strong> 
-                {selectedDisease.treatment || "Please consult a local agricultural expert."}
-              </p>
+              
+              {selectedDisease.remediation ? (
+                <div className="space-y-3">
+                  <strong className="block text-gray-900 mb-1 text-base">Recommended Actions:</strong>
+                  {selectedDisease.remediation.organic && selectedDisease.remediation.organic.length > 0 && (
+                    <div>
+                      <span className="font-semibold text-green-700">Organic Treatment:</span>
+                      <ul className="list-disc pl-5 mt-1 space-y-1">
+                        {selectedDisease.remediation.organic.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {selectedDisease.remediation.chemical && selectedDisease.remediation.chemical.length > 0 && (
+                    <div>
+                      <span className="font-semibold text-blue-700">Chemical Treatment:</span>
+                      <ul className="list-disc pl-5 mt-1 space-y-1">
+                        {selectedDisease.remediation.chemical.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {selectedDisease.remediation.preventive && selectedDisease.remediation.preventive.length > 0 && (
+                    <div>
+                      <span className="font-semibold text-orange-700">Preventive Actions:</span>
+                      <ul className="list-disc pl-5 mt-1 space-y-1">
+                        {selectedDisease.remediation.preventive.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p>
+                  <strong className="block text-gray-900 mb-1 text-base">Recommended Action:</strong> 
+                  {selectedDisease.treatment || "Please consult a local agricultural expert."}
+                </p>
+              )}
             </div>
             
             <button 

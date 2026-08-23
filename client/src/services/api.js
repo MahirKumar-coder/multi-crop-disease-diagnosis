@@ -1,7 +1,12 @@
 import axios from 'axios'; // API requests via Axios[cite: 2]
 
+const baseURL = import.meta.env.VITE_API_URL || 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://127.0.0.1:8000'
+    : 'https://multi-crop-disease-diagnosis.onrender.com');
+
 const API = axios.create({
-  baseURL: 'https://multi-crop-disease-diagnosis.onrender.com', // Production URL
+  baseURL: baseURL,
 });
 
 export const predictDisease = (imageFile) => {

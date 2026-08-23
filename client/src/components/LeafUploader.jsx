@@ -9,8 +9,9 @@ const LeafUploader = ({ onUploadSuccess }) => {
     if (!file) return;
     setLoading(true);
     try {
+      const originalUrl = URL.createObjectURL(file);
       const response = await predictDisease(file);
-      onUploadSuccess(response.data); // Axios se data receive karke parent ko pass karna[cite: 2]
+      onUploadSuccess({ ...response.data, original_url: originalUrl }); // Pass response data and locally generated URL[cite: 2]
     } catch (error) {
       alert("Error predicting disease.");
     } finally {

@@ -32,10 +32,10 @@ class GradCAM:
         self.activations = self.activations.data.cpu().numpy()[0]
 
         weights = np.mean(gradients, axis=(1, 2))
-        cam = np.zeros(activations.shape[1:], dtype=np.float32)
+        cam = np.zeros(self.activations.shape[1:], dtype=np.float32)
 
         for i, w in enumerate(weights):
-            cam += w * activations[i]
+            cam += w * self.activations[i]
 
         cam = np.maximum(cam, 0)
         if np.max(cam) != 0:

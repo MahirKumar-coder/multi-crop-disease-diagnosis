@@ -26,7 +26,7 @@ const Dashboard = () => {
           {data.gradcam_heatmap_base64 && (
              <HeatmapSlider 
                 originalImg={data.original_url || "images.jpg"} 
-                heatmapImg={`data:image/jpeg;base64,${data.gradcam_heatmap_base64}`} 
+                heatmapImg={data.gradcam_heatmap_base64} 
              />
           )}
           

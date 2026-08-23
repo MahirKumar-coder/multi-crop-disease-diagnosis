@@ -45,36 +45,36 @@ async def predict_leaf_disease(request: Request, file: UploadFile = File(...)):
             )
         )
 
-        try:
-            heatmap_base64 = grad_cam_engine.generate_heatmap(tensor, top_pred_idx, raw_image)
-        except Exception as e: 
-            logger.warning(f"Grad-CAM generation failed: {e}")
-            heatmap_base64 = None
+    try:
+        heatmap_base64 = grad_cam_engine.generate_heatmap(tensor, top_pred_idx, raw_image)
+    except Exception as e: 
+        logger.warning(f"Grad-CAM generation failed: {e}")
+        heatmap_base64 = None
 
-        meta = disease_db.get(top_class_id, {
-            "crop": top_class_id.split("___")[0],
-            "disease_name": top_class_id.replace("___", " - "),
-            "is_healthy": "healthy" in top_class_id.lower(),
-            "pathogen_type": "Unknown",
-            "severity": "Medium",
-            "description": "Pathology details unavailable.",
-            "remediation": {
-                "organic": ["Maintain proper aeration and sunlight."],
-                "chemical": ["Consult local agricultural extension center."],
-                "preventive": ["Prune damaged area and practice crop rotation."]
-            }
-        })
+    meta = disease_db.get(top_class_id, {
+        "crop": top_class_id.split("___")[0],
+        "disease_name": top_class_id.replace("___", " - "),
+        "is_healthy": "healthy" in top_class_id.lower(),
+        "pathogen_type": "Unknown",
+        "severity": "Medium",
+        "description": "Pathology details unavailable.",
+        "remediation": {
+            "organic": ["Maintain proper aeration and sunlight."],
+            "chemical": ["Consult local agricultural extension center."],
+            "preventive": ["Prune damaged area and practice crop rotation."]
+        }
+    })
 
-        return PredectionResponse(
-            predicted_class=top_class_id,
-            crop=meta["crop"],
-            disease_name=meta["disease_name"],
-            confidence=round(top_confidence * 100, 2),
-            is_healthy=meta["is_healthy"],
-            pathogen_type=meta["pathogen_type"],
-            severity=meta["severity"],
-            description=meta["description"],
-            remediation=RemediationPlan(**meta["remediation"]),
-            top_3_predictions=top_3_list,
-            gradcam_heatmap_base64=heatmap_base64
-        )
+    return PredectionResponse(
+        predicted_class=top_class_id,
+        crop=meta["crop"],
+        disease_name=meta["disease_name"],
+        confidence=round(top_confidence * 100, 2),
+        is_healthy=meta["is_healthy"],
+        pathogen_type=meta["pathogen_type"],
+        severity=meta["severity"],
+        description=meta["description"],
+        remediation=RemediationPlan(**meta["remediation"]),
+        top_3_predictions=top_3_list,
+        gradcam_heatmap_base64=heatmap_base64
+    )
