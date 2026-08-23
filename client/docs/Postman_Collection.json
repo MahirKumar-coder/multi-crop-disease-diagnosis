@@ -1,0 +1,30 @@
+{
+  "info": {
+    "name": "CropCare AI API",
+    "description": "API collection for Multi-Crop Disease Diagnosis backend endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Check Server Health",
+      "request": {
+        "method": "GET",
+        "url": "https://multi-crop-disease-diagnosis.onrender.com/health"
+      }
+    },
+    {
+      "name": "2. Get All Diseases",
+      "request": {
+        "method": "GET",
+        "url": "https://multi-crop-disease-diagnosis.onrender.com/api/diseases"
+      }
+    },
+    {
+      "name": "3. Predict Disease",
+      "request": {
+        "method": "POST",
+        "url": "https://multi-crop-disease-diagnosis.onrender.com/api/predict"
+      }
+    }
+  ]
+}
