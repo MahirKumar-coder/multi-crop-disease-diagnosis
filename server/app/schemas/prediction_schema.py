@@ -8,10 +8,11 @@ class PredictionItem(BaseModel):
     crop: str
     confidence: float
 
-class PredectionResponse(BaseModel):
+class PredictionResponse(BaseModel):
     predicted_class: str
     crop: str
     disease_name: str
+    scientific_name: Optional[str] = "N/A"
     confidence: float
     is_healthy: bool
     pathogen_type: str
@@ -20,3 +21,5 @@ class PredectionResponse(BaseModel):
     remediation: RemediationPlan
     top_3_predictions: List[PredictionItem]
     gradcam_heatmap_base64: Optional[str] = None
+    cached: bool = False
+    image_sha256: Optional[str] = None
