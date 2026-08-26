@@ -1,9 +1,15 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
+class TreatmentDetail(BaseModel):
+    name: str
+    dosage: str
+    frequency: str
+    stage: str
+
 class RemediationPlan(BaseModel): 
-    organic: List[str]
-    chemical: List[str]
+    organic: List[TreatmentDetail]
+    chemical: List[TreatmentDetail]
     preventive: List[str]
 
 class DiseaseDetail(BaseModel):

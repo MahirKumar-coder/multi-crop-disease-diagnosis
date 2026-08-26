@@ -7,11 +7,21 @@
     "is_healthy": false,
     "pathogen_type": "Fungal",
     "severity": "Medium",
-    "description": "Causes olive-green to black velvety spots on leaves and fruit, leading to premature leaf drop.",
+    "description": "Olive-green to black velvety spots on leaves and fruit leading to premature defoliation and fruit cracking.",
     "remediation": {
-      "organic": ["Rake and compost fallen leaves", "Apply sulfur or copper-based sprays early season", "Prune tree canopy for air circulation"],
-      "chemical": ["Apply Captan or Mancozeb fungicide", "Use Difenoconazole at green tip stage"],
-      "preventive": ["Plant scab-resistant cultivars", "Avoid overhead sprinkler irrigation"]
+      "organic": [
+        {"name": "Liquid Sulfur / Wettable Sulfur", "dosage": "3-5 g/L of water", "frequency": "Every 7-10 days during wet spring", "stage": "Green tip to petal fall"},
+        {"name": "Copper Oxychloride (50% WP)", "dosage": "2.5-3.0 g/L of water", "frequency": "Single dormant spray", "stage": "Before bud break"}
+      ],
+      "chemical": [
+        {"name": "Difenoconazole (25% EC)", "dosage": "0.5 ml/L of water", "frequency": "Every 12-14 days", "stage": "Pink bud stage onward"},
+        {"name": "Captan (50% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 7-10 days after rain", "stage": "Petal fall to pre-harvest"}
+      ],
+      "preventive": [
+        "Prune and destroy infected fallen leaves and mummified fruit to eliminate overwintering ascospores.",
+        "Prune tree canopies in late winter to enhance airflow and accelerate leaf drying.",
+        "Avoid overhead sprinkler irrigation during bud expansion."
+      ]
     }
   },
   "Apple___Black_rot": {
@@ -22,26 +32,702 @@
     "is_healthy": false,
     "pathogen_type": "Fungal",
     "severity": "High",
-    "description": "Produces frog-eye leaf spots and cankers on branches, causing dark rotted areas on fruit.",
+    "description": "Frog-eye leaf spots, limb cankers, and firm, dark rotting of fruit with concentric rings.",
     "remediation": {
-      "organic": ["Prune out dead wood and cankers 6 inches below visible damage", "Remove mummified apples"],
-      "chemical": ["Apply Thiophanate-methyl or Captan from petal fall through harvest"],
-      "preventive": ["Maintain overall tree health", "Control insect damage that creates wounds"]
+      "organic": [
+        {"name": "Copper Octanoate (Soap)", "dosage": "10 ml/L of water", "frequency": "Every 10-14 days", "stage": "Early foliage development"},
+        {"name": "Lime Sulfur Solution", "dosage": "20 ml/L of water", "frequency": "One application", "stage": "Delayed dormant period"}
+      ],
+      "chemical": [
+        {"name": "Thiophanate-Methyl (70% WP)", "dosage": "1.0 g/L of water", "frequency": "Every 14 days", "stage": "From petal fall through cover sprays"},
+        {"name": "Mancozeb (75% WP)", "dosage": "2.0-2.5 g/L of water", "frequency": "Every 10-12 days", "stage": "Post-bloom"}
+      ],
+      "preventive": [
+        "Prune out dead shoots, twigs, and cankers at least 15 cm below visible margins.",
+        "Remove all dead wood and brush piles from orchard vicinity.",
+        "Control codling moth and eye-spotted bud moth to avoid entry wounds."
+      ]
+    }
+  },
+  "Apple___Cedar_apple_rust": {
+    "id": "Apple___Cedar_apple_rust",
+    "crop": "Apple",
+    "disease_name": "Cedar Apple Rust",
+    "scientific_name": "Gymnosporangium juniperi-virginianae",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Bright orange-yellow spots on upper leaf surfaces; tube-like aecia structures emerge underneath.",
+    "remediation": {
+      "organic": [
+        {"name": "Sulfur Spray (80% WDG)", "dosage": "3 g/L of water", "frequency": "Every 7 days in wet weather", "stage": "From pink bud through petal fall"},
+        {"name": "Bacillus amyloliquefaciens", "dosage": "2.5 ml/L of water", "frequency": "Every 7-10 days", "stage": "Active leaf flushing"}
+      ],
+      "chemical": [
+        {"name": "Myclobutanil (10% WP)", "dosage": "0.5 g/L of water", "frequency": "Every 10-14 days", "stage": "Pink bud until 30 days post-bloom"},
+        {"name": "Trifloxystrobin (50% WG)", "dosage": "0.15 g/L of water", "frequency": "Every 14 days (max 3 sprays)", "stage": "Petal fall"}
+      ],
+      "preventive": [
+        "Eradicate nearby Eastern Red Cedar and juniper host bushes within a 1-2 km perimeter.",
+        "Prune and dispose of cedar galls from ornamental junipers in late winter.",
+        "Select rust-resistant apple cultivars such as Enterprise, Freedom, or Liberty."
+      ]
     }
   },
   "Apple___healthy": {
     "id": "Apple___healthy",
     "crop": "Apple",
-    "disease_name": "Healthy Leaf",
+    "disease_name": "Healthy Foliage",
     "scientific_name": "N/A",
     "is_healthy": true,
     "pathogen_type": "None",
     "severity": "None",
-    "description": "Leaf tissues exhibit uniform pigmentation and no pathogenic infection.",
+    "description": "Foliage shows normal chlorophyll pigmentation, intact cuticle layers, and uniform vigor.",
     "remediation": {
-      "organic": ["Maintain balanced compost/organic nitrogen levels"],
-      "chemical": ["No chemical treatment required"],
-      "preventive": ["Regular field scouting and balanced irrigation"]
+      "organic": [
+        {"name": "Cold-Pressed Neem Oil (0.03% Azadirachtin)", "dosage": "3 ml/L of water", "frequency": "Once every 21 days as prophylactic", "stage": "Vegetative growth"}
+      ],
+      "chemical": [
+        {"name": "Water Soluble NPK (19:19:19) Foliar Feed", "dosage": "4 g/L of water", "frequency": "Once monthly", "stage": "Active fruit development"}
+      ],
+      "preventive": [
+        "Maintain routine orchard sanitation and scout leaves bi-weekly.",
+        "Ensure soil pH remains balanced between 6.0 and 6.8 with adequate drainage.",
+        "Apply balanced nitrogen fertilizer; avoid excess vegetative flush."
+      ]
+    }
+  },
+  "Blueberry___healthy": {
+    "id": "Blueberry___healthy",
+    "crop": "Blueberry",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Healthy deep green leaves without chlorotic margins or pathogenic pustules.",
+    "remediation": {
+      "organic": [
+        {"name": "Fish Hydrolysate & Kelp Extract", "dosage": "5 ml/L of water", "frequency": "Every 30 days", "stage": "Vegetative phase"}
+      ],
+      "chemical": [
+        {"name": "Chelated Iron (Fe-EDDHA)", "dosage": "1.5 g/L of water", "frequency": "Every 45 days if pH > 5.5", "stage": "Growing season"}
+      ],
+      "preventive": [
+        "Keep soil pH acidic (4.5–5.2) using elemental sulfur amendments.",
+        "Mulch with pine bark or acidic sawdust to retain root zone moisture.",
+        "Use drip irrigation to prevent foliar dampness."
+      ]
+    }
+  },
+  "Cherry___Powdery_mildew": {
+    "id": "Cherry___Powdery_mildew",
+    "crop": "Cherry",
+    "disease_name": "Powdery Mildew",
+    "scientific_name": "Podosphaera clandestina",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "White powdery fungal mycelium covering young leaves, curling margins upward and distorting new shoots.",
+    "remediation": {
+      "organic": [
+        {"name": "Potassium Bicarbonate", "dosage": "3 g/L of water", "frequency": "Every 7 days at first sign", "stage": "Foliage expansion"},
+        {"name": "Neem Oil Extract (70%)", "dosage": "5 ml/L of water", "frequency": "Every 10 days", "stage": "Pre-bloom to fruit set"}
+      ],
+      "chemical": [
+        {"name": "Quinoxyfen (22.5% SC)", "dosage": "0.3 ml/L of water", "frequency": "Every 14 days", "stage": "Shuck split to harvest"},
+        {"name": "Hexaconazole (5% EC)", "dosage": "1.0 ml/L of water", "frequency": "Every 12-14 days", "stage": "Early shoot growth"}
+      ],
+      "preventive": [
+        "Maintain open canopy architecture to maximize UV sunlight penetration.",
+        "Avoid late-summer nitrogen applications that promote susceptible tender growth.",
+        "Irrigate orchard early in the morning so tree surfaces dry rapidly."
+      ]
+    }
+  },
+  "Cherry___healthy": {
+    "id": "Cherry___healthy",
+    "crop": "Cherry",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Symmetrical, dark green foliage with healthy vascular tissue and active photosynthesis.",
+    "remediation": {
+      "organic": [
+        {"name": "Seaweed Liquid Bio-stimulant", "dosage": "2 ml/L of water", "frequency": "Every 25 days", "stage": "Post-harvest & spring"}
+      ],
+      "chemical": [
+        {"name": "Balanced Micronutrient Mixture (Zn, B, Fe)", "dosage": "1.5 g/L of water", "frequency": "Twice per season", "stage": "Pre-flowering"}
+      ],
+      "preventive": [
+        "Inspect canopy regularly for early signs of shot-hole or mildew.",
+        "Ensure deep root irrigation during hot dry periods.",
+        "Sterilize pruning shears in 70% isopropyl alcohol between trees."
+      ]
+    }
+  },
+  "Corn___Cercospora_leaf_spot Gray_leaf_spot": {
+    "id": "Corn___Cercospora_leaf_spot Gray_leaf_spot",
+    "crop": "Corn (Maize)",
+    "disease_name": "Gray Leaf Spot",
+    "scientific_name": "Cercospora zeae-maydis",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "High",
+    "description": "Narrow, rectangular, tan-to-gray lesions running parallel between leaf veins, causing severe blighting.",
+    "remediation": {
+      "organic": [
+        {"name": "Trichoderma harzianum (Bio-fungicide)", "dosage": "5 g/L of water", "frequency": "Every 14 days", "stage": "V6 to tasseling"},
+        {"name": "Copper Hydroxide", "dosage": "2 g/L of water", "frequency": "Every 10 days", "stage": "Early vegetative"}
+      ],
+      "chemical": [
+        {"name": "Azoxystrobin + Difenoconazole", "dosage": "1.0 ml/L of water", "frequency": "Single spray at threshold", "stage": "VT (Tasseling) to R1 (Silking)"},
+        {"name": "Pyraclostrobin (20% WG)", "dosage": "0.8 g/L of water", "frequency": "1-2 applications", "stage": "V8 to VT"}
+      ],
+      "preventive": [
+        "Rotate corn crops with non-host legumes (soybean) for at least 1-2 seasons.",
+        "Chop and till previous year corn crop residue to promote microbial decomposition.",
+        "Plant certified hybrids with high tolerance ratings."
+      ]
+    }
+  },
+  "Corn___Common_rust": {
+    "id": "Corn___Common_rust",
+    "crop": "Corn (Maize)",
+    "disease_name": "Common Rust",
+    "scientific_name": "Puccinia sorghi",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Small, powdery, cinnamon-brown oval pustules on both upper and lower leaf surfaces.",
+    "remediation": {
+      "organic": [
+        {"name": "Sulfur Dust (85% DP)", "dosage": "20-25 kg/ha dusting", "frequency": "Early morning at first pustule sight", "stage": "Whorl stage"},
+        {"name": "Bacillus subtilis Formulation", "dosage": "3 ml/L of water", "frequency": "Every 10 days", "stage": "V6 onward"}
+      ],
+      "chemical": [
+        {"name": "Propiconazole (25% EC)", "dosage": "1.0 ml/L of water", "frequency": "Repeat after 14 days if needed", "stage": "Tasseling to blister stage"},
+        {"name": "Tebuconazole (25.9% EC)", "dosage": "0.75 ml/L of water", "frequency": "Single protective spray", "stage": "Early onset"}
+      ],
+      "preventive": [
+        "Plant rust-resistant corn hybrids.",
+        "Plant early in the season to mature past peak spore cloud dispersion periods.",
+        "Monitor lower canopy leaves starting from vegetative stage V6."
+      ]
+    }
+  },
+  "Corn___Northern_Leaf_Blight": {
+    "id": "Corn___Northern_Leaf_Blight",
+    "crop": "Corn (Maize)",
+    "disease_name": "Northern Leaf Blight",
+    "scientific_name": "Setosphaeria turcica",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "High",
+    "description": "Long, elliptical, cigar-shaped grayish-green to tan lesions that coalesce and destroy canopy leaf area.",
+    "remediation": {
+      "organic": [
+        {"name": "Pseudomonas fluorescens", "dosage": "5 g/L of water", "frequency": "Every 14 days", "stage": "Knee-high to tasseling"},
+        {"name": "Bordeaux Mixture (1%)", "dosage": "10 g/L of water", "frequency": "Every 10-12 days", "stage": "Early season"}
+      ],
+      "chemical": [
+        {"name": "Mancozeb + Carbendazim", "dosage": "2.0 g/L of water", "frequency": "Every 10-14 days", "stage": "At initial lesion development"},
+        {"name": "Picoxystrobin + Cyproconazole", "dosage": "0.8 ml/L of water", "frequency": "Single application", "stage": "V12 to silking"}
+      ],
+      "preventive": [
+        "Incorporate conventional tillage to bury surface crop residue in high-risk zones.",
+        "Follow a 2-year crop rotation schedule away from monoculture maize.",
+        "Optimize row spacing to avoid extended humidity trapped in the canopy."
+      ]
+    }
+  },
+  "Corn___healthy": {
+    "id": "Corn___healthy",
+    "crop": "Corn (Maize)",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Uniform broad green leaves without chlorosis, rust pustules, or elliptical blights.",
+    "remediation": {
+      "organic": [
+        {"name": "Humic Acid & Fulvic Acid Liquid", "dosage": "3 ml/L of water", "frequency": "Twice per cycle", "stage": "V4 and V8 stages"}
+      ],
+      "chemical": [
+        {"name": "Urea / Zinc Sulfate Foliar Spray", "dosage": "10 g/L Urea + 2 g/L ZnSO4", "frequency": "Once at knee-high stage", "stage": "V6"}
+      ],
+      "preventive": [
+        "Conduct regular soil tests to balance potassium and nitrogen ratios.",
+        "Scout field twice weekly from vegetative whorl through grain fill.",
+        "Maintain adequate furrow or pivot irrigation schedules."
+      ]
+    }
+  },
+  "Grape___Black_rot": {
+    "id": "Grape___Black_rot",
+    "crop": "Grape",
+    "disease_name": "Black Rot",
+    "scientific_name": "Guignardia bidwellii",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "High",
+    "description": "Reddish-brown circular leaf spots with tiny black pycnidia; fruit shrivels into hard black mummies.",
+    "remediation": {
+      "organic": [
+        {"name": "Liquid Copper Fungicide", "dosage": "3 ml/L of water", "frequency": "Every 7-10 days", "stage": "Bud break to veraison"},
+        {"name": "Serenade ASO (Bacillus subtilis)", "dosage": "4 ml/L of water", "frequency": "Every 7 days", "stage": "Pre-bloom to fruit set"}
+      ],
+      "chemical": [
+        {"name": "Myclobutanil (40% WP)", "dosage": "0.3 g/L of water", "frequency": "Every 14 days", "stage": "From 10 cm shoot growth through 4 weeks post-bloom"},
+        {"name": "Kresoxim-Methyl (44.3% SC)", "dosage": "0.5 ml/L of water", "frequency": "Every 10-12 days", "stage": "Bloom and pea-sized berry"}
+      ],
+      "preventive": [
+        "Prune vines and remove all mummified grape clusters during winter pruning.",
+        "Train vines on trellis systems that allow air circulation and sunlight exposure.",
+        "Mow cover crops regularly under trellises to lower ambient humidity."
+      ]
+    }
+  },
+  "Grape___Esca_(Black_Measles)": {
+    "id": "Grape___Esca_(Black_Measles)",
+    "crop": "Grape",
+    "disease_name": "Esca (Black Measles)",
+    "scientific_name": "Phaeomoniella chlamydospora & Fomitiporia mediterranea",
+    "is_healthy": false,
+    "pathogen_type": "Complex Fungal",
+    "severity": "High",
+    "description": "Tiger-stripe patterns of interveinal chlorosis and necrosis on leaves; dark spots on berry skins.",
+    "remediation": {
+      "organic": [
+        {"name": "Trichoderma atroviride Wound Sealant", "dosage": "Paint paste directly on pruning cuts", "frequency": "Immediately after pruning", "stage": "Dormant season"},
+        {"name": "Liquid Seaweed Root Drench", "dosage": "5 ml/L of water", "frequency": "Every 30 days", "stage": "Spring growth"}
+      ],
+      "chemical": [
+        {"name": "Trunk Protection Fungicide (Thiophanate-Methyl)", "dosage": "Paste (50 g/L) on wounds", "frequency": "Annual application on cuts", "stage": "Post-winter pruning"},
+        {"name": "Fosetyl-Al (80% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 21 days", "stage": "Active shoot growth"}
+      ],
+      "preventive": [
+        "Avoid pruning during wet or rainy periods when fungal spores disperse.",
+        "Seal all pruning wounds larger than 1.5 cm diameter with protective paste.",
+        "Uproot and burn severely infected vines with apoplexy symptoms."
+      ]
+    }
+  },
+  "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+    "id": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "crop": "Grape",
+    "disease_name": "Leaf Blight (Isariopsis)",
+    "scientific_name": "Pseudocercospora vitis",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Irregular dark brown to black spots that coalesce, causing premature leaf drying and defoliation.",
+    "remediation": {
+      "organic": [
+        {"name": "Bordeaux Mixture (1%)", "dosage": "10 g/L of water", "frequency": "Every 12 days", "stage": "Post-monsoon flush"},
+        {"name": "Neem Seed Kernel Extract (5%)", "dosage": "50 ml/L of water", "frequency": "Every 10 days", "stage": "Vegetative stage"}
+      ],
+      "chemical": [
+        {"name": "Carbendazim (50% WP)", "dosage": "1.0 g/L of water", "frequency": "Every 14 days", "stage": "At first spot appearance"},
+        {"name": "Chlorothalonil (75% WP)", "dosage": "2.0 g/L of water", "frequency": "Every 10-12 days", "stage": "Canopy development"}
+      ],
+      "preventive": [
+        "Collect and burn fallen diseased leaves after harvest.",
+        "Perform timely shoot thinning and de-suckering to maintain canopy aeration.",
+        "Avoid excess nitrogen fertilizer late in the season."
+      ]
+    }
+  },
+  "Grape___healthy": {
+    "id": "Grape___healthy",
+    "crop": "Grape",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Vibrant green leaves with intact margins, clear venation, and strong vine architecture.",
+    "remediation": {
+      "organic": [
+        {"name": "Cold Water Sea Kelp Extract", "dosage": "2.5 ml/L of water", "frequency": "Monthly", "stage": "Shoot elongation & veraison"}
+      ],
+      "chemical": [
+        {"name": "Potassium Sulfate (0:0:50) Foliar Grade", "dosage": "4 g/L of water", "frequency": "Twice per cycle", "stage": "Veraison (berry coloring)"}
+      ],
+      "preventive": [
+        "Prune vines to maintain proper shoot spacing (12-15 shoots per meter of cord).",
+        "Implement preventive scouting for downy mildew and leaf hoppers.",
+        "Ensure proper vineyard drainage to prevent root asphyxiation."
+      ]
+    }
+  },
+  "Orange___Haunglongbing_(Citrus_greening)": {
+    "id": "Orange___Haunglongbing_(Citrus_greening)",
+    "crop": "Orange / Citrus",
+    "disease_name": "Citrus Greening (Huanglongbing)",
+    "scientific_name": "Candidatus Liberibacter asiaticus",
+    "is_healthy": false,
+    "pathogen_type": "Bacterial (Vector: Asian Citrus Psyllid)",
+    "severity": "High",
+    "description": "Asymmetrical blotchy yellow leaf mottling, small lopsided bitter fruit with aborted seeds, and twig dieback.",
+    "remediation": {
+      "organic": [
+        {"name": "Horticultural Mineral Oil (99%)", "dosage": "15 ml/L of water", "frequency": "Every 14 days during flush", "stage": "Young leaf flush (psyllid control)"},
+        {"name": "Zinc + Iron + Manganese Nutritional Drench", "dosage": "3 g/L of water", "frequency": "Every 30 days", "stage": "Continuous tree support"}
+      ],
+      "chemical": [
+        {"name": "Imidacloprid (17.8% SL) [Psyllid Vector Control]", "dosage": "0.5 ml/L of water", "frequency": "Soil drench at spring flush", "stage": "New flush"},
+        {"name": "Oxytetracycline Trunk Injection (Authorized areas)", "dosage": "As per label tree caliper", "frequency": "Annual post-harvest", "stage": "Mature affected trees"}
+      ],
+      "preventive": [
+        "Source certified disease-free nursery rootstocks grown in screened facilities.",
+        "Scout and monitor Asian Citrus Psyllid vectors using yellow sticky traps.",
+        "Immediately remove and burn confirmed symptomatic declining trees to protect the grove."
+      ]
+    }
+  },
+  "Peach___Bacterial_spot": {
+    "id": "Peach___Bacterial_spot",
+    "crop": "Peach",
+    "disease_name": "Bacterial Spot",
+    "scientific_name": "Xanthomonas arboricola pv. pruni",
+    "is_healthy": false,
+    "pathogen_type": "Bacterial",
+    "severity": "High",
+    "description": "Angular, purple-brown water-soaked spots on leaves that drop out, creating a shot-hole appearance; pitted fruit cankers.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Hydroxide (Low Dose / Neutralized)", "dosage": "1.5 g/L of water", "frequency": "Every 7-10 days in wet spring", "stage": "Bud swell to petal fall"},
+        {"name": "Oxytetracycline (Agricultural Grade)", "dosage": "1.0 g/L of water", "frequency": "Every 7 days during rain", "stage": "Shuck split through cover sprays"}
+      ],
+      "chemical": [
+        {"name": "Copper Sulfate + Hydrated Lime (Dormant)", "dosage": "4 g/L + 4 g/L of water", "frequency": "Single dormant application", "stage": "Late autumn leaf fall"},
+        {"name": "Zinc Sulfate + Lime Buffer", "dosage": "2 g/L + 2 g/L of water", "frequency": "Every 14 days", "stage": "Early foliage season"}
+      ],
+      "preventive": [
+        "Plant resistant peach cultivars (e.g., Clayton, Candor, Harrow Diamond).",
+        "Avoid orchard sites with sandy soil without windbreaks, as wind-blown sand creates entry wounds.",
+        "Do not over-apply nitrogen, which stimulates succulent susceptible tissue."
+      ]
+    }
+  },
+  "Peach___healthy": {
+    "id": "Peach___healthy",
+    "crop": "Peach",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Glossy lanceolate leaves without bacterial lesions, leaf curl, or shot-hole punctures.",
+    "remediation": {
+      "organic": [
+        {"name": "Compost Tea Foliar Extract", "dosage": "50 ml/L of water", "frequency": "Every 3 weeks", "stage": "Active vegetative growth"}
+      ],
+      "chemical": [
+        {"name": "Calcium Nitrate Foliar Grade", "dosage": "3 g/L of water", "frequency": "Twice per season", "stage": "Fruit sizing"}
+      ],
+      "preventive": [
+        "Apply dormant spray of copper before bud swell to prevent leaf curl.",
+        "Maintain open-center pruning to facilitate drying of morning dew.",
+        "Scout tree canopies after windy storm events."
+      ]
+    }
+  },
+  "Pepper,_bell___Bacterial_spot": {
+    "id": "Pepper,_bell___Bacterial_spot",
+    "crop": "Bell Pepper",
+    "disease_name": "Bacterial Spot",
+    "scientific_name": "Xanthomonas euvesicatoria",
+    "is_healthy": false,
+    "pathogen_type": "Bacterial",
+    "severity": "High",
+    "description": "Small, yellow-green spots turning dark brown with water-soaked borders; defoliation exposes fruit to sunscald.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Oxychloride + Streptomycin Sulfate", "dosage": "2.5 g/L + 0.1 g/L of water", "frequency": "Every 7-10 days", "stage": "Transplanting onward"},
+        {"name": "Bacillus pumilus (Bio-bactericide)", "dosage": "3 ml/L of water", "frequency": "Every 7 days", "stage": "Seedling and flowering"}
+      ],
+      "chemical": [
+        {"name": "Copper Hydroxide + Mancozeb (Tank Mix)", "dosage": "2.0 g/L + 2.0 g/L of water", "frequency": "Every 7 days during rain", "stage": "Early vegetative through fruiting"},
+        {"name": "Acibenzolar-S-Methyl (Systemic Acquired Resistance)", "dosage": "0.25 g/L of water", "frequency": "Every 14 days", "stage": "Post-transplant"}
+      ],
+      "preventive": [
+        "Use certified pathogen-free, hot-water treated pepper seeds (50°C for 25 minutes).",
+        "Avoid overhead sprinkler irrigation; employ drip tape underneath plastic mulch.",
+        "Rotate fields away from solanaceous crops (tomatoes, potatoes, eggplants) for 2+ years."
+      ]
+    }
+  },
+  "Pepper,_bell___healthy": {
+    "id": "Pepper,_bell___healthy",
+    "crop": "Bell Pepper",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Lush, dark-green broad leaves free from bacterial lesions, mottling, or mites.",
+    "remediation": {
+      "organic": [
+        {"name": "Panchagavya / Organic Ferment", "dosage": "30 ml/L of water", "frequency": "Every 15 days", "stage": "Vegetative & flowering"}
+      ],
+      "chemical": [
+        {"name": "19:19:19 + Micronutrients", "dosage": "3.5 g/L of water", "frequency": "Every 20 days", "stage": "Flowering and fruit set"}
+      ],
+      "preventive": [
+        "Maintain clean field borders free of weeds that harbor thrips and aphids.",
+        "Maintain steady soil moisture to prevent blossom end rot and stress.",
+        "Ensure staking support to prevent branches from touching wet soil."
+      ]
+    }
+  },
+  "Potato___Early_blight": {
+    "id": "Potato___Early_blight",
+    "crop": "Potato",
+    "disease_name": "Early Blight",
+    "scientific_name": "Alternaria solani",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Dark brown to black spots with concentric rings (target-board pattern) on older lower leaves.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Octanoate", "dosage": "5 ml/L of water", "frequency": "Every 7-10 days", "stage": "Tuber initiation onward"},
+        {"name": "Trichoderma viride Bio-fungicide", "dosage": "5 g/L of water", "frequency": "Every 14 days", "stage": "Vegetative phase"}
+      ],
+      "chemical": [
+        {"name": "Azoxystrobin (23% SC)", "dosage": "1.0 ml/L of water", "frequency": "Every 10-14 days", "stage": "Early foliage canopy closure"},
+        {"name": "Mancozeb (75% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 7-10 days", "stage": "Preventive / Early infection"}
+      ],
+      "preventive": [
+        "Practice a 3-year crop rotation with non-solanaceous crops.",
+        "Maintain optimum nitrogen and potassium fertility; plant stress accelerates susceptibility.",
+        "Avoid overhead irrigation late in the afternoon."
+      ]
+    }
+  },
+  "Potato___Late_blight": {
+    "id": "Potato___Late_blight",
+    "crop": "Potato",
+    "disease_name": "Late Blight",
+    "scientific_name": "Phytophthora infestans",
+    "is_healthy": false,
+    "pathogen_type": "Oomycete / Water Mold",
+    "severity": "High",
+    "description": "Rapidly expanding water-soaked dark lesions with pale green halos; white fungal mold on leaf undersides under high humidity.",
+    "remediation": {
+      "organic": [
+        {"name": "Bordeaux Mixture (1%)", "dosage": "10 g/L of water", "frequency": "Every 5-7 days during cloudy/wet periods", "stage": "All vegetative stages"},
+        {"name": "Copper Hydroxide (77% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 7 days", "stage": "Preventive before rains"}
+      ],
+      "chemical": [
+        {"name": "Metalaxyl-M + Mancozeb (Ridomil Gold)", "dosage": "2.5 g/L of water", "frequency": "Every 10-14 days (Max 2 consecutive sprays)", "stage": "At initial disease outbreak"},
+        {"name": "Dimethomorph (50% WP)", "dosage": "1.0 g/L of water", "frequency": "Every 7-10 days", "stage": "Active blight conditions"},
+        {"name": "Cymoxanil + Mancozeb", "dosage": "2.0 g/L of water", "frequency": "Every 7-8 days", "stage": "Curative spray"}
+      ],
+      "preventive": [
+        "Plant certified, disease-free seed tubers.",
+        "Hill potato rows well to build a thick soil barrier over tubers against spore washdown.",
+        "Destroy cull piles of discarded potatoes before spring planting.",
+        "Harvest only when vines are completely dead and dry."
+      ]
+    }
+  },
+  "Potato___healthy": {
+    "id": "Potato___healthy",
+    "crop": "Potato",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Robust, upright green potato canopy showing active growth with no blights or chlorosis.",
+    "remediation": {
+      "organic": [
+        {"name": "Neem Oil 1500 PPM", "dosage": "4 ml/L of water", "frequency": "Every 20 days", "stage": "Early vegetative growth"}
+      ],
+      "chemical": [
+        {"name": "0:52:34 (Monopotassium Phosphate)", "dosage": "5 g/L of water", "frequency": "Twice at tuber bulking", "stage": "Tuber bulking"}
+      ],
+      "preventive": [
+        "Monitor local weather forecasts for Late Blight alert triggers (cool, overcast, high humidity).",
+        "Maintain regular hill weed control to ensure good airflow through furrows.",
+        "Ensure balanced irrigation without waterlogging."
+      ]
+    }
+  },
+  "Raspberry___healthy": {
+    "id": "Raspberry___healthy",
+    "crop": "Raspberry",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Compound green serrated leaves free from spur blight, rust, or virus mosaic mottling.",
+    "remediation": {
+      "organic": [
+        {"name": "Liquid Fish Emulsion", "dosage": "5 ml/L of water", "frequency": "Every 3-4 weeks", "stage": "Cane emergence"}
+      ],
+      "chemical": [
+        {"name": "Chelated Trace Mineral Complex", "dosage": "1.5 g/L of water", "frequency": "Twice per spring", "stage": "Pre-bloom"}
+      ],
+      "preventive": [
+        "Prune out spent floricanes immediately after fruiting to promote primocane growth.",
+        "Trellis canes to prevent canes bending onto moist soil.",
+        "Keep row width restricted to 45-60 cm for adequate sunlight penetration."
+      ]
+    }
+  },
+  "Soybean___healthy": {
+    "id": "Soybean___healthy",
+    "crop": "Soybean",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Trifoliate foliage with dark green coloration, active nitrogen nodules on roots, and no rust pustules.",
+    "remediation": {
+      "organic": [
+        {"name": "Rhizobium & PSB Bio-fertilizer", "dosage": "Seed treatment (10 g/kg) + Foliar (5 ml/L)", "frequency": "At sowing & R1 stage", "stage": "Sowing & Early flowering"}
+      ],
+      "chemical": [
+        {"name": "13:00:45 (Potassium Nitrate)", "dosage": "5 g/L of water", "frequency": "At pod formation", "stage": "R3-R4 pod fill"}
+      ],
+      "preventive": [
+        "Rotate crops with corn or small grains to reduce soil-borne pathogen load.",
+        "Scout field canopy starting from flowering (R1) through pod development (R4).",
+        "Maintain optimal plant populations to prevent dense canopy humidity."
+      ]
+    }
+  },
+  "Squash___Powdery_mildew": {
+    "id": "Squash___Powdery_mildew",
+    "crop": "Squash / Cucurbits",
+    "disease_name": "Powdery Mildew",
+    "scientific_name": "Podosphaera xanthii",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "White talcum powder-like fungal spots expanding over both sides of leaves, causing yellowing and crisping.",
+    "remediation": {
+      "organic": [
+        {"name": "Potassium Bicarbonate (85% SP)", "dosage": "3.5 g/L of water", "frequency": "Every 7 days at first sign", "stage": "Vine running to harvest"},
+        {"name": "Dilute Milk Spray (40% Fresh Milk : 60% Water)", "dosage": "400 ml/L of water", "frequency": "Every 7-10 days in bright sunlight", "stage": "Vegetative & flowering"},
+        {"name": "Neem Oil Extract (70%)", "dosage": "5 ml/L of water", "frequency": "Every 7 days", "stage": "Early infection"}
+      ],
+      "chemical": [
+        {"name": "Myclobutanil (10% WP)", "dosage": "0.5 g/L of water", "frequency": "Every 10-14 days", "stage": "Early disease onset"},
+        {"name": "Azoxystrobin (23% SC)", "dosage": "0.8 ml/L of water", "frequency": "Every 10 days (max 2 sprays)", "stage": "Flowering through fruit set"}
+      ],
+      "preventive": [
+        "Select powdery mildew resistant squash varieties (PMR varieties).",
+        "Space squash plants at least 90-120 cm apart in full sun.",
+        "Avoid high-nitrogen fertilizer applications that stimulate susceptible soft growth."
+      ]
+    }
+  },
+  "Strawberry___Leaf_scorch": {
+    "id": "Strawberry___Leaf_scorch",
+    "crop": "Strawberry",
+    "disease_name": "Leaf Scorch",
+    "scientific_name": "Diplocarpon earlianum",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Small, irregular purplish blotches on leaves that enlarge and cause entire leaf margins to curl and turn scorched brown.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Octanoate", "dosage": "4 ml/L of water", "frequency": "Every 10 days", "stage": "Spring vegetative flush"},
+        {"name": "Bacillus subtilis Bio-fungicide", "dosage": "3 ml/L of water", "frequency": "Every 7-10 days", "stage": "Pre-bloom"}
+      ],
+      "chemical": [
+        {"name": "Captan (50% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 10-14 days", "stage": "From crown emergence to fruit set"},
+        {"name": "Thiophanate-Methyl (70% WP)", "dosage": "1.0 g/L of water", "frequency": "Every 14 days", "stage": "Post-harvest renovation"}
+      ],
+      "preventive": [
+        "Mow and renovate strawberry beds immediately after harvest, destroying old foliage.",
+        "Plant in well-drained raised beds with clean straw mulch.",
+        "Avoid over-crowding; keep runner plants spaced 15-20 cm apart."
+      ]
+    }
+  },
+  "Strawberry___healthy": {
+    "id": "Strawberry___healthy",
+    "crop": "Strawberry",
+    "disease_name": "Healthy Foliage",
+    "scientific_name": "N/A",
+    "is_healthy": true,
+    "pathogen_type": "None",
+    "severity": "None",
+    "description": "Vibrant trifoliate green leaves with clear margins and healthy crowns.",
+    "remediation": {
+      "organic": [
+        {"name": "Cold Water Kelp Meal Extract", "dosage": "3 ml/L of water", "frequency": "Every 20 days", "stage": "Root establishment & fruiting"}
+      ],
+      "chemical": [
+        {"name": "Water Soluble NPK (12:61:00 Monoammonium Phosphate)", "dosage": "3 g/L of water", "frequency": "At crown establishment", "stage": "Early season"}
+      ],
+      "preventive": [
+        "Use drip irrigation under black plastic mulch to eliminate leaf splashing.",
+        "Scout runner plants weekly for early leaf spot or scorch lesions.",
+        "Renew strawberry plantings every 3-4 years to avoid disease buildup."
+      ]
+    }
+  },
+  "Tomato___Bacterial_spot": {
+    "id": "Tomato___Bacterial_spot",
+    "crop": "Tomato",
+    "disease_name": "Bacterial Spot",
+    "scientific_name": "Xanthomonas perforans",
+    "is_healthy": false,
+    "pathogen_type": "Bacterial",
+    "severity": "High",
+    "description": "Small, dark, greasy water-soaked spots with yellow halos on leaves, stems, and scabby spots on fruit.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Hydroxide + Streptocycline", "dosage": "2.0 g/L + 0.1 g/L of water", "frequency": "Every 7-10 days", "stage": "Seedling to fruiting"},
+        {"name": "Bacteriophage Bio-control (AgriPhage)", "dosage": "2 ml/L of water", "frequency": "Twice weekly during outbreaks", "stage": "High risk periods"}
+      ],
+      "chemical": [
+        {"name": "Copper Oxychloride (50% WP) + Mancozeb (75% WP)", "dosage": "2.0 g/L + 2.0 g/L of water", "frequency": "Every 7 days in wet conditions", "stage": "Vegetative through fruit set"},
+        {"name": "Acibenzolar-S-Methyl", "dosage": "0.3 g/L of water", "frequency": "Every 14 days", "stage": "Post-transplant"}
+      ],
+      "preventive": [
+        "Use certified pathogen-free treated seed (soak seed in 1.3% sodium hypochlorite for 1 minute).",
+        "Stake and prune tomato vines to keep foliage off wet soil.",
+        "Never work in or prune tomato plants while the foliage is wet."
+      ]
+    }
+  },
+  "Tomato___Early_blight": {
+    "id": "Tomato___Early_blight",
+    "crop": "Tomato",
+    "disease_name": "Early Blight",
+    "scientific_name": "Alternaria linariae",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Concentric target-board rings surrounded by chlorotic yellow halos on lower older leaves, progressing upward.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Octanoate Soap", "dosage": "5 ml/L of water", "frequency": "Every 7-10 days", "stage": "First fruit cluster formation"},
+        {"name": "Bacillus subtilis (Serenade)", "dosage": "4 ml/L of water", "frequency": "Every 7 days", "stage": "Vegetative growth"}
+      ],
+      "chemical": [
+        {"name": "Azoxystrobin (18.2%) + Difenoconazole (11.4%) SC", "dosage": "1.0 ml/L of water", "frequency": "Every 12-14 days", "stage": "At first lesion appearance"},
+        {"name": "Chlorothalonil (75% WP)", "dosage": "2.0 g/L of water", "frequency": "Every 7-10 days", "stage": "Protective cover spray"}
+      ],
+      "preventive": [
+        "Remove lower leaves up to 30 cm off the ground after first fruit cluster sets.",
+        "Apply organic straw or plastic mulch beneath plants to block soil-splash spore dispersal.",
+        "Maintain 2-3 year crop rotation with corn, beans, or brassicas."
+      ]
     }
   },
   "Tomato___Late_blight": {
@@ -50,28 +736,201 @@
     "disease_name": "Late Blight",
     "scientific_name": "Phytophthora infestans",
     "is_healthy": false,
-    "pathogen_type": "Fungal/Oomycete",
+    "pathogen_type": "Oomycete / Water Mold",
     "severity": "High",
-    "description": "Causes large, irregular dark water-soaked lesions on leaves and white fungal growth on undersides.",
+    "description": "Large, irregular water-soaked pale-green to black lesions with white sporulation on undersides; rapid vine collapse.",
     "remediation": {
-      "organic": ["Destroy and discard infected plants immediately", "Apply copper hydroxide preventive sprays"],
-      "chemical": ["Apply Chlorothalonil or Metalaxyl-M fungicides"],
-      "preventive": ["Provide adequate plant spacing", "Water only at base using drip irrigation"]
+      "organic": [
+        {"name": "Bordeaux Mixture (1%)", "dosage": "10 g/L of water", "frequency": "Every 5-7 days in cool wet weather", "stage": "All growth stages"},
+        {"name": "Copper Hydroxide (53.8% WG)", "dosage": "2.0 g/L of water", "frequency": "Every 7 days", "stage": "Preventive before rains"}
+      ],
+      "chemical": [
+        {"name": "Cymoxanil (8%) + Mancozeb (64% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 7-10 days", "stage": "Curative on first observation"},
+        {"name": "Mandipropamid (23.3% SC)", "dosage": "0.6 ml/L of water", "frequency": "Every 10-14 days", "stage": "Preventive / Early infection"},
+        {"name": "Dimethomorph (50% WP)", "dosage": "1.0 g/L of water", "frequency": "Every 7 days", "stage": "Active outbreak"}
+      ],
+      "preventive": [
+        "Destroy and bag volunteer tomato and potato plants in the field perimeter.",
+        "Ensure spacing of at least 60 cm between plants and 120 cm between rows.",
+        "Scout plants daily when temperatures stay between 15-22°C with high relative humidity."
+      ]
+    }
+  },
+  "Tomato___Leaf_Mold": {
+    "id": "Tomato___Leaf_Mold",
+    "crop": "Tomato",
+    "disease_name": "Leaf Mold",
+    "scientific_name": "Passalora fulva",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Pale green to yellow diffuse spots on upper leaf surface with olive-brown velvety mold on lower surface.",
+    "remediation": {
+      "organic": [
+        {"name": "Potassium Bicarbonate", "dosage": "3 g/L of water", "frequency": "Every 7 days", "stage": "Greenhouse / High tunnel growth"},
+        {"name": "Copper Oxychloride (50% WP)", "dosage": "2.5 g/L of water", "frequency": "Every 10 days", "stage": "Vegetative phase"}
+      ],
+      "chemical": [
+        {"name": "Difenoconazole (25% EC)", "dosage": "0.5 ml/L of water", "frequency": "Every 14 days", "stage": "At initial spot appearance"},
+        {"name": "Cyprodinil + Fludioxonil (Switch 62.5 WG)", "dosage": "0.8 g/L of water", "frequency": "Every 10-12 days", "stage": "Flowering through harvest"}
+      ],
+      "preventive": [
+        "Maintain greenhouse relative humidity below 85% with exhaust fans and horizontal airflow.",
+        "Space plants generously and prune side shoots (suckers) regularly.",
+        "Select leaf mold resistant tomato varieties (Cf-gene hybrids)."
+      ]
+    }
+  },
+  "Tomato___Septoria_leaf_spot": {
+    "id": "Tomato___Septoria_leaf_spot",
+    "crop": "Tomato",
+    "disease_name": "Septoria Leaf Spot",
+    "scientific_name": "Septoria lycopersici",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Numerous small circular spots (2-3 mm) with dark brown margins and sunken grayish-white centers containing black pycnidia.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Soap Fungicide", "dosage": "5 ml/L of water", "frequency": "Every 7-10 days", "stage": "Post-transplant onward"},
+        {"name": "Neem Oil Extract (0.15% EC)", "dosage": "4 ml/L of water", "frequency": "Every 7 days", "stage": "Early vegetative"}
+      ],
+      "chemical": [
+        {"name": "Chlorothalonil (75% WP)", "dosage": "2.0 g/L of water", "frequency": "Every 7-10 days", "stage": "From first bottom spot sight"},
+        {"name": "Pyraclostrobin (20% WG)", "dosage": "0.75 g/L of water", "frequency": "Every 14 days", "stage": "Vegetative to fruit set"}
+      ],
+      "preventive": [
+        "Remove all bottom leaves touching the soil.",
+        "Apply clean mulch around plants immediately after transplanting.",
+        "Deep plow crop debris after harvest to bury fungal spores."
+      ]
+    }
+  },
+  "Tomato___Spider_mites Two-spotted_spider_mite": {
+    "id": "Tomato___Spider_mites Two-spotted_spider_mite",
+    "crop": "Tomato",
+    "disease_name": "Two-Spotted Spider Mite Damage",
+    "scientific_name": "Tetranychus urticae",
+    "is_healthy": false,
+    "pathogen_type": "Arachnid Pest",
+    "severity": "Medium",
+    "description": "Fine yellow stippling and bronzing on upper leaf surface accompanied by delicate fine webbing on undersides.",
+    "remediation": {
+      "organic": [
+        {"name": "Potassium Salts of Fatty Acids (Insecticidal Soap)", "dosage": "15 ml/L of water", "frequency": "Every 4-5 days for 3 cycles", "stage": "Underleaf thorough spray"},
+        {"name": "Neem Oil 10000 PPM (Azadirachtin 1%)", "dosage": "3 ml/L of water", "frequency": "Every 7 days", "stage": "At mite detection"},
+        {"name": "Predatory Mites (Phytoseiulus persimilis)", "dosage": "Release 5-10 mites/plant", "frequency": "Single release", "stage": "Low pest threshold"}
+      ],
+      "chemical": [
+        {"name": "Abamectin (1.9% EC)", "dosage": "0.5 ml/L of water", "frequency": "Every 7-10 days (max 2 sprays)", "stage": "Underleaf coverage"},
+        {"name": "Spiromesifen (22.9% SC)", "dosage": "0.8 ml/L of water", "frequency": "Single application", "stage": "At peak nymph activity"},
+        {"name": "Fenazaquin (10% EC)", "dosage": "1.5 ml/L of water", "frequency": "Repeat after 14 days if needed", "stage": "Adult mite population"}
+      ],
+      "preventive": [
+        "Avoid dusty field conditions; spray perimeter farm roads with water.",
+        "Overhead misting during hot dry spells to disrupt dry microclimates.",
+        "Control broadleaf weeds like nightshade and mallow around field borders."
+      ]
+    }
+  },
+  "Tomato___Target_Spot": {
+    "id": "Tomato___Target_Spot",
+    "crop": "Tomato",
+    "disease_name": "Target Spot",
+    "scientific_name": "Corynespora cassiicola",
+    "is_healthy": false,
+    "pathogen_type": "Fungal",
+    "severity": "Medium",
+    "description": "Brown circular lesions with faint concentric rings; lesions on fruit are slightly sunken with dark brown centers.",
+    "remediation": {
+      "organic": [
+        {"name": "Copper Hydroxide", "dosage": "2.0 g/L of water", "frequency": "Every 7-10 days", "stage": "Vegetative through harvest"},
+        {"name": "Trichoderma harzianum", "dosage": "5 g/L of water", "frequency": "Every 14 days", "stage": "Root zone & foliar"}
+      ],
+      "chemical": [
+        {"name": "Azoxystrobin (23% SC)", "dosage": "1.0 ml/L of water", "frequency": "Every 10-14 days", "stage": "Early fruit set"},
+        {"name": "Boscalid + Pyraclostrobin (Pristine WG)", "dosage": "0.8 g/L of water", "frequency": "Every 14 days", "stage": "Canopy development"}
+      ],
+      "preventive": [
+        "Maintain wide in-row plant spacing to minimize moisture retention.",
+        "Prune lower suckers and support tomato plants with stakes or cages.",
+        "Rotate fields away from cucurbits, soybeans, and other solanaceous crops."
+      ]
+    }
+  },
+  "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+    "id": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "crop": "Tomato",
+    "disease_name": "Tomato Yellow Leaf Curl Virus (TYLCV)",
+    "scientific_name": "Begomovirus (Vector: Bemisia tabaci / Whitefly)",
+    "is_healthy": false,
+    "pathogen_type": "Viral (Vector: Silverleaf Whitefly)",
+    "severity": "High",
+    "description": "Severe upward leaf curling, yellowing of margins, stunted bushy upright growth, and flower drop.",
+    "remediation": {
+      "organic": [
+        {"name": "Yellow Sticky Traps (Whitefly monitor/mass-trapping)", "dosage": "20-25 traps per acre", "frequency": "Install at transplanting", "stage": "All crop stages"},
+        {"name": "Neem Oil 10000 PPM (Azadirachtin)", "dosage": "3 ml/L of water", "frequency": "Every 5-7 days", "stage": "Vector control (whiteflies)"},
+        {"name": "Beauveria bassiana Bio-pesticide", "dosage": "5 g/L of water", "frequency": "Every 7 days", "stage": "Underleaf spray for whitefly nymphs"}
+      ],
+      "chemical": [
+        {"name": "Diafenthiuron (50% WP) [Vector control]", "dosage": "1.2 g/L of water", "frequency": "Every 10 days", "stage": "Vegetative & early flowering"},
+        {"name": "Spirotetramat (15.3% OD)", "dosage": "0.75 ml/L of water", "frequency": "Every 14 days", "stage": "Peak whitefly pressure"},
+        {"name": "Acetamiprid (20% SP)", "dosage": "0.5 g/L of water", "frequency": "Every 10-12 days", "stage": "Early infestation"}
+      ],
+      "preventive": [
+        "Plant TYLCV-resistant tomato hybrids (e.g., Tyking, Shanty, USAT 101).",
+        "Use 40-50 mesh insect-proof netting in nursery seedling beds.",
+        "Uproot and bury infected stunted plants immediately to prevent virus transmission."
+      ]
+    }
+  },
+  "Tomato___Tomato_mosaic_virus": {
+    "id": "Tomato___Tomato_mosaic_virus",
+    "crop": "Tomato",
+    "disease_name": "Tomato Mosaic Virus (ToMV)",
+    "scientific_name": "Tobamovirus (Mechanically Transmitted)",
+    "is_healthy": false,
+    "pathogen_type": "Viral (Mechanical contact / Seed)",
+    "severity": "High",
+    "description": "Mottled dark and light green mosaic leaf pattern, leaf distortion, 'fern-leaf' thinning, and internal browning of fruit.",
+    "remediation": {
+      "organic": [
+        {"name": "Skimmed Milk Spray (20% Solution)", "dosage": "200 ml/L of water", "frequency": "Spray before handling/transplanting", "stage": "Seedling handling"},
+        {"name": "Trisodium Phosphate (TSP 10%) Tool Wash", "dosage": "100 g/L of water", "frequency": "Disinfect tools between plants", "stage": "Pruning operations"}
+      ],
+      "chemical": [
+        {"name": "No direct viricide exists", "dosage": "N/A", "frequency": "N/A", "stage": "N/A"},
+        {"name": "Zinc Sulfate + Micronutrient Foliar Support", "dosage": "2 g/L of water", "frequency": "Every 20 days", "stage": "Plant immunity boost"}
+      ],
+      "preventive": [
+        "Wash hands thoroughly with soap and water before handling plants (especially tobacco smokers).",
+        "Disinfect pruning knives, shears, and stakes in 10% bleach or 10% TSP solution.",
+        "Heat-treat dry tomato seeds at 70°C for 2-4 days prior to planting."
+      ]
     }
   },
   "Tomato___healthy": {
     "id": "Tomato___healthy",
     "crop": "Tomato",
-    "disease_name": "Healthy Leaf",
+    "disease_name": "Healthy Foliage",
     "scientific_name": "N/A",
     "is_healthy": true,
     "pathogen_type": "None",
     "severity": "None",
-    "description": "Vibrant green foliage showing no chlorosis or necrosis.",
+    "description": "Vigorous green compound leaves without mosaic mottling, fungal lesions, or mite webbing.",
     "remediation": {
-      "organic": ["Apply neem oil spray periodically as a general prophylactic"],
-      "chemical": ["No chemical application needed"],
-      "preventive": ["Ensure proper staking and crop rotation"]
+      "organic": [
+        {"name": "Cold-Pressed Neem Prophylactic Spray", "dosage": "3 ml/L of water", "frequency": "Every 15-20 days", "stage": "Continuous growth"}
+      ],
+      "chemical": [
+        {"name": "19:19:19 Water Soluble Fertilizer", "dosage": "4 g/L of water", "frequency": "Every 14 days", "stage": "Vegetative & fruit growth"}
+      ],
+      "preventive": [
+        "Prune bottom suckers to keep lower canopy 20 cm above soil line.",
+        "Scout leaf undersides twice weekly for early signs of whitefly or thrips.",
+        "Ensure consistent drip irrigation to prevent moisture stress and blossom end rot."
+      ]
     }
   }
 }
