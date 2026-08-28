@@ -1,15 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { getAllDiseases } from '../services/api';
 
+// Naya helper function jo object ko sahi se text me convert karega
+const renderStep = (step) => {
+  if (typeof step === 'object' && step !== null) {
+    return (
+      <div className="flex flex-col mb-2">
+        <span className="font-semibold text-gray-800">{step.name || "Action step"}</span>
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-600 mt-0.5">
+          {step.dosage && <span><b className="text-gray-700">Dosage:</b> {step.dosage}</span>}
+          {step.frequency && <span><b className="text-gray-700">Freq:</b> {step.frequency}</span>}
+          {step.stage && <span><b className="text-gray-700">Stage:</b> {step.stage}</span>}
+        </div>
+      </div>
+    );
+  }
+  // Agar purana text data aaya toh direct return karega
+  return <span>{step}</span>;
+};
+
 const Encyclopedia = () => {
   const [diseases, setDiseases] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // Naya state: Kaunsi bimari par click kiya gaya hai (Popup ke liye)
   const [selectedDisease, setSelectedDisease] = useState(null);
 
-  // Fallback data in case the API is down
   const fallbackData = [
     { 
       name: "Apple Scab", 
@@ -71,7 +87,7 @@ const Encyclopedia = () => {
           {diseases.map((disease, idx) => (
             <div 
               key={idx} 
-              onClick={() => setSelectedDisease(disease)} // Click karne par popup set hoga
+              onClick={() => setSelectedDisease(disease)}
               className="bg-white p-5 shadow-sm rounded-lg border-l-4 border-green-500 hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1 relative group"
             >
               <h3 className="font-bold text-lg text-gray-800 group-hover:text-green-700 transition-colors">
@@ -83,7 +99,6 @@ const Encyclopedia = () => {
                 </p>
               )}
               
-              {/* Naya 'Click to view' text jo hover karne par highlight hoga */}
               <p className="text-xs text-green-600 mt-3 font-semibold flex items-center gap-1 opacity-70 group-hover:opacity-100">
                 Click for details <span>&rarr;</span>
               </p>
@@ -101,7 +116,6 @@ const Encyclopedia = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           
           <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg relative animate-[fadeIn_0.2s_ease-out]">
-            {/* Close Button (X) */}
             <button 
               onClick={() => setSelectedDisease(null)}
               className="absolute top-4 right-4 text-gray-400 hover:text-red-500 hover:bg-red-50 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xl transition-colors"
@@ -124,34 +138,42 @@ const Encyclopedia = () => {
               </p>
               
               {selectedDisease.remediation ? (
-                <div className="space-y-3">
-                  <strong className="block text-gray-900 mb-1 text-base">Recommended Actions:</strong>
+                <div className="space-y-4 mt-4 border-t pt-4 border-gray-200">
+                  <strong className="block text-gray-900 mb-2 text-base">Recommended Actions:</strong>
+                  
                   {selectedDisease.remediation.organic && selectedDisease.remediation.organic.length > 0 && (
                     <div>
-                      <span className="font-semibold text-green-700">Organic Treatment:</span>
-                      <ul className="list-disc pl-5 mt-1 space-y-1">
+                      <span className="font-semibold text-green-700 inline-block mb-1">Organic Treatment:</span>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {/* FIX: renderStep use kiya gaya hai yahan */}
                         {selectedDisease.remediation.organic.map((step, i) => (
-                          <li key={i}>{step}</li>
+                          <li key={i}>{renderStep(step)}</li>
                         ))}
                       </ul>
                     </div>
                   )}
+                  
                   {selectedDisease.remediation.chemical && selectedDisease.remediation.chemical.length > 0 && (
-                    <div>
-                      <span className="font-semibold text-blue-700">Chemical Treatment:</span>
-                      <ul className="list-disc pl-5 mt-1 space-y-1">
+                    <div className="mt-3">
+                      <span className="font-semibold text-blue-700 inline-block mb-1">Chemical Treatment:</span>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {/* FIX: renderStep use kiya gaya hai yahan */}
                         {selectedDisease.remediation.chemical.map((step, i) => (
-                          <li key={i}>{step}</li>
+                          <li key={i}>{renderStep(step)}</li>
                         ))}
                       </ul>
                     </div>
                   )}
-                  {selectedDisease.remediation.preventive && selectedDisease.remediation.preventive.length > 0 && (
-                    <div>
-                      <span className="font-semibold text-orange-700">Preventive Actions:</span>
-                      <ul className="list-disc pl-5 mt-1 space-y-1">
-                        {selectedDisease.remediation.preventive.map((step, i) => (
-                          <li key={i}>{step}</li>
+                  
+                  {/* API response handle karne ke liye fallback preventive vs prevention add kiya */}
+                  {(selectedDisease.remediation.preventive || selectedDisease.remediation.prevention) && 
+                   (selectedDisease.remediation.preventive?.length > 0 || selectedDisease.remediation.prevention?.length > 0) && (
+                    <div className="mt-3">
+                      <span className="font-semibold text-orange-700 inline-block mb-1">Preventive Actions:</span>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {/* FIX: renderStep use kiya gaya hai yahan */}
+                        {(selectedDisease.remediation.preventive || selectedDisease.remediation.prevention).map((step, i) => (
+                          <li key={i}>{renderStep(step)}</li>
                         ))}
                       </ul>
                     </div>

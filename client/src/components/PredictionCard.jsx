@@ -1,43 +1,34 @@
 import React from 'react';
+import { Activity } from 'lucide-react';
 
-const PredictionCard = ({ result }) => {
-  // Backend ab 'top_3_predictions' bhej raha hai
-  if (!result || !result.top_3_predictions) return null;
+const PredictionCard = ({ predictions }) => {
+    if (!predictions || predictions.length === 0) return null;
 
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-md mt-6 border-t-4 border-green-500">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-gray-800">Diagnosis Results</h2>
-        <span className={`px-3 py-1 font-semibold rounded-full text-sm ${result.severity === 'High' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-          Severity: {result.severity || 'Unknown'}
-        </span>
-      </div>
-
-      <div className="mb-6">
-        <h3 className="text-lg font-medium text-gray-700">Primary Detection:</h3>
-        <p className="text-xl font-bold text-green-700">{result.disease_name}</p>
-      </div>
-
-      <div className="space-y-4">
-        <h4 className="text-md font-semibold text-gray-600 mb-2">Confidence Scores</h4>
-        {result.top_3_predictions.map((pred, i) => (
-          <div key={i} className="w-full">
-            <div className="flex justify-between text-sm mb-1 text-gray-700">
-              {/* Backend ne class ka naam 'disease_name' rakha hai */}
-              <span>{pred.disease_name}</span>
-              <span className="font-bold">{pred.confidence}%</span>
+    return (
+        <div className="p-5 bg-white rounded-2xl shadow-sm border border-gray-100 space-y-5">
+            <h3 className="font-bold text-lg text-slate-800 flex items-center gap-2 border-b pb-3">
+                <Activity className="w-5 h-5 text-emerald-500"/> Confidence Breakdown
+            </h3>
+            <div className="space-y-4">
+                {predictions.slice(0, 3).map((pred, index) => (
+                    <div key={index} className="space-y-1.5">
+                        <div className="flex justify-between text-sm">
+                            <span className="font-semibold text-slate-700">{pred.className.replace(/_/g, ' ')}</span>
+                            <span className={`font-bold ${index === 0 ? 'text-emerald-600' : 'text-slate-500'}`}>
+                                {(pred.probability * 100).toFixed(1)}%
+                            </span>
+                        </div>
+                        <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                            <div 
+                                className={`h-full rounded-full transition-all duration-1000 ${index === 0 ? 'bg-emerald-500' : 'bg-slate-400'}`}
+                                style={{ width: `${pred.probability * 100}%` }}
+                            ></div>
+                        </div>
+                    </div>
+                ))}
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
-              <div 
-                className={`h-2.5 rounded-full ${i === 0 ? 'bg-green-600' : 'bg-blue-400'}`} 
-                style={{ width: `${Math.max(0, Math.min(100, pred.confidence))}%` }}
-              ></div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default PredictionCard;

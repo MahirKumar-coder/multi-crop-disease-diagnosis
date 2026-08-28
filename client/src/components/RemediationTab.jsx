@@ -1,39 +1,51 @@
 import React, { useState } from 'react';
+import { Leaf, FlaskConical, ShieldCheck } from 'lucide-react';
+import TreatmentSteps from './TreatmentSteps';
 
-const RemediationTab = ({ remediationData }) => {
-  const [tab, setTab] = useState('organic');
-  if (!remediationData) return null;
+const RemediationTab = ({ treatmentData }) => {
+    const [activeTab, setActiveTab] = useState('organic');
+    
+    if (!treatmentData) return null;
 
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-      <div className="flex border-b mb-4 gap-2 overflow-x-auto">
-        <button 
-          className={`px-4 py-2 font-medium transition-all ${tab === 'organic' ? 'border-b-2 border-green-600 text-green-600' : 'text-gray-500 hover:text-green-500'}`} 
-          onClick={() => setTab('organic')}
-        >
-          Organic Treatment
-        </button>
-        <button 
-          className={`px-4 py-2 font-medium transition-all ${tab === 'chemical' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-blue-500'}`} 
-          onClick={() => setTab('chemical')}
-        >
-          Chemical Treatment
-        </button>
-        <button 
-          className={`px-4 py-2 font-medium transition-all ${tab === 'preventive' ? 'border-b-2 border-orange-600 text-orange-600' : 'text-gray-500 hover:text-orange-500'}`} 
-          onClick={() => setTab('preventive')}
-        >
-          Preventive Actions
-        </button>
-      </div>
-      <ul className="list-disc pl-5 text-gray-700">
-        {remediationData[tab]?.map((step, i) => <li key={i} className="mb-2">{step}</li>)}
-        {(!remediationData[tab] || remediationData[tab].length === 0) && (
-          <li className="list-none text-gray-400">No suggestions available for this section.</li>
-        )}
-      </ul>
-    </div>
-  );
+    const tabs = [
+        { id: 'organic', label: 'Organic', icon: Leaf, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+        { id: 'chemical', label: 'Chemical', icon: FlaskConical, color: 'text-amber-600', bg: 'bg-amber-50' },
+        { id: 'prevention', label: 'Prevention', icon: ShieldCheck, color: 'text-blue-600', bg: 'bg-blue-50' },
+    ];
+
+    // FIX: Yahan 'preventive' word add kiya gaya hai (Backend se yahi naam aa raha hai)
+    const getStepsData = () => {
+        if (activeTab === 'prevention') {
+            return treatmentData.preventive || treatmentData.prevention || treatmentData.preventive_measures;
+        }
+        return treatmentData[activeTab];
+    };
+
+    return (
+        <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="flex border-b border-gray-100">
+                {tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    const isActive = activeTab === tab.id;
+                    return (
+                        <button
+                            key={tab.id}
+                            className={`flex-1 py-4 flex flex-col items-center gap-1 text-sm font-semibold transition-all
+                            ${isActive ? `border-b-2 border-slate-800 text-slate-800 ${tab.bg}` : 'text-slate-400 hover:bg-gray-50'}`}
+                            onClick={() => setActiveTab(tab.id)}
+                        >
+                            <Icon className={`w-5 h-5 ${isActive ? tab.color : ''}`} />
+                            <span>{tab.label}</span>
+                        </button>
+                    );
+                })}
+            </div>
+            <div className="p-6 min-h-[200px] bg-slate-50/50">
+                {/* Updated function calling */}
+                <TreatmentSteps steps={getStepsData()} />
+            </div>
+        </div>
+    );
 };
 
 export default RemediationTab;

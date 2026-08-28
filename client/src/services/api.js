@@ -1,9 +1,7 @@
-import axios from 'axios'; // API requests via Axios[cite: 2]
+import axios from 'axios'; 
 
-const baseURL = import.meta.env.VITE_API_URL || 
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://127.0.0.1:8000'
-    : 'https://multi-crop-disease-diagnosis.onrender.com');
+// Hamesha live Render backend ko point karega
+const baseURL = import.meta.env.VITE_API_URL || 'https://multi-crop-disease-diagnosis.onrender.com';
 
 const API = axios.create({
   baseURL: baseURL,
