@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Download, Loader2 } from 'lucide-react';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+// FIX: Import ka naya tarika Vite ke liye
+import autoTable from 'jspdf-autotable'; 
 import html2canvas from 'html2canvas';
 
 const PdfReportGenerator = ({ targetElementId, fileName, data }) => {
@@ -18,13 +19,13 @@ const PdfReportGenerator = ({ targetElementId, fileName, data }) => {
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-            // Page 1: UI Visuals & Grad-CAM Image
+            // Page 1: UI Visuals
             pdf.setFontSize(20);
             pdf.setTextColor(4, 120, 87);
             pdf.text("CropCare AI - Agronomy Advisory Report", 14, 15);
             pdf.addImage(imgData, 'PNG', 0, 25, pdfWidth, pdfHeight);
 
-            // Page 2: Dosage Tables (Wednesday Task)
+            // Page 2: Dosage Tables
             if (data && data.remediation) {
                 pdf.addPage();
                 pdf.setFontSize(16);
@@ -38,7 +39,8 @@ const PdfReportGenerator = ({ targetElementId, fileName, data }) => {
                         item.frequency || 'N/A'
                     ]);
 
-                    pdf.autoTable({
+                    // FIX: Direct autoTable function call instead of pdf.autoTable()
+                    autoTable(pdf, {
                         startY: 30,
                         head: [['Chemical / Product', 'Dosage', 'Frequency']],
                         body: chemicalData,
@@ -53,7 +55,8 @@ const PdfReportGenerator = ({ targetElementId, fileName, data }) => {
                         item.method || item.frequency || 'N/A'
                     ]);
 
-                    pdf.autoTable({
+                    // FIX: Direct autoTable function call
+                    autoTable(pdf, {
                         startY: pdf.lastAutoTable ? pdf.lastAutoTable.finalY + 15 : 30,
                         head: [['Organic Solution', 'Application Method']],
                         body: organicData,
@@ -66,7 +69,7 @@ const PdfReportGenerator = ({ targetElementId, fileName, data }) => {
             pdf.save(fileName);
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to generate PDF.');
+            alert('Failed to generate PDF. Please try again.');
         } finally {
             setIsGenerating(false);
         }
