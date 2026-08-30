@@ -1,48 +1,81 @@
 import React, { useState } from 'react';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import { Download, Loader2 } from 'lucide-react';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
 
-// FIX: targetId ko targetElementId kar diya gaya hai
-const PdfReportGenerator = ({ targetElementId, fileName = "CropCare_Prescription.pdf" }) => {
-    const [loading, setLoading] = useState(false);
+const PdfReportGenerator = ({ targetElementId, fileName, data }) => {
+    const [isGenerating, setIsGenerating] = useState(false);
 
     const generatePdf = async () => {
-        setLoading(true);
-        // FIX: Yahan bhi targetElementId use kiya hai
-        const element = document.getElementById(targetElementId); 
-        
-        if (!element) {
-            console.error("Error: PDF report div not found!");
-            alert("Error: Please wait for the report to fully load before downloading.");
-            setLoading(false);
-            return;
-        }
-
+        setIsGenerating(true);
         try {
-            const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
+            const element = document.getElementById(targetElementId);
+            const canvas = await html2canvas(element, { scale: 2, useCORS: true });
             const imgData = canvas.toDataURL('image/png');
+
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            
-            pdf.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
+
+            // Page 1: UI Visuals & Grad-CAM Image
+            pdf.setFontSize(20);
+            pdf.setTextColor(4, 120, 87);
+            pdf.text("CropCare AI - Agronomy Advisory Report", 14, 15);
+            pdf.addImage(imgData, 'PNG', 0, 25, pdfWidth, pdfHeight);
+
+            // Page 2: Dosage Tables (Wednesday Task)
+            if (data && data.remediation) {
+                pdf.addPage();
+                pdf.setFontSize(16);
+                pdf.setTextColor(30, 41, 59);
+                pdf.text("Detailed Treatment Prescriptions", 14, 20);
+
+                if (data.remediation.chemical && data.remediation.chemical.length > 0) {
+                    const chemicalData = data.remediation.chemical.map(item => [
+                        item.name || item.action,
+                        item.dosage || 'N/A',
+                        item.frequency || 'N/A'
+                    ]);
+
+                    pdf.autoTable({
+                        startY: 30,
+                        head: [['Chemical / Product', 'Dosage', 'Frequency']],
+                        body: chemicalData,
+                        theme: 'grid',
+                        headStyles: { fillColor: [217, 119, 6] }
+                    });
+                }
+
+                if (data.remediation.organic && data.remediation.organic.length > 0) {
+                    const organicData = data.remediation.organic.map(item => [
+                        item.name || item.action,
+                        item.method || item.frequency || 'N/A'
+                    ]);
+
+                    pdf.autoTable({
+                        startY: pdf.lastAutoTable ? pdf.lastAutoTable.finalY + 15 : 30,
+                        head: [['Organic Solution', 'Application Method']],
+                        body: organicData,
+                        theme: 'grid',
+                        headStyles: { fillColor: [5, 150, 105] }
+                    });
+                }
+            }
+
             pdf.save(fileName);
         } catch (error) {
-            console.error("PDF Generation Failed:", error);
+            console.error('Error:', error);
+            alert('Failed to generate PDF.');
         } finally {
-            setLoading(false);
+            setIsGenerating(false);
         }
     };
 
     return (
-        <button 
-            onClick={generatePdf}
-            disabled={loading}
-            className="w-full sm:w-auto px-8 py-3.5 bg-slate-900 text-white rounded-xl font-semibold shadow-lg hover:bg-slate-800 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
-        >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-            {loading ? 'Generating Report...' : 'Download Full Report (PDF)'}
+        <button onClick={generatePdf} disabled={isGenerating} className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition disabled:opacity-70">
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+            <span>{isGenerating ? 'Generating Report...' : 'Download Full Report (PDF)'}</span>
         </button>
     );
 };
