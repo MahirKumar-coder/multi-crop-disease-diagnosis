@@ -30,12 +30,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div 
-            className="min-h-screen py-10 px-4 md:px-8 font-sans bg-cover bg-center bg-fixed relative"
-            style={{ 
-                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=1920&auto=format&fit=crop')` 
-            }}
-        >
+        <div className="min-h-screen py-10 px-4 md:px-8 font-sans relative">
             {isProcessing && (
                 <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
                     <div className="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center border border-emerald-100 animate-in zoom-in-95 duration-300">
