@@ -20,7 +20,7 @@ const Dashboard = () => {
 
         try {
             const response = await predictDisease(file);
-            setData(response.data);
+            setData({ ...response.data, original_url: imageUrl });
         } catch (error) {
             console.error("Camera prediction error:", error);
             alert("Failed to analyze image. Please try again or check your internet connection.");
