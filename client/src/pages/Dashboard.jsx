@@ -1,44 +1,36 @@
 import React, { useState } from 'react';
-import { Camera as CameraIcon, Info, Loader2 } from 'lucide-react';
+// WEEK 3: Added AlertTriangle import
+import { Camera as CameraIcon, Info, Loader2, AlertTriangle } from 'lucide-react';
 import LeafUploader from '../components/LeafUploader';
 import CameraModal from '../components/CameraModal';
 import HeatmapSlider from '../components/HeatmapSlider';
 import PredictionCard from '../components/PredictionCard';
 import RemediationTab from '../components/RemediationTab';
 import PdfReportGenerator from '../components/PdfReportGenerator';
-// FIX: Backend API import karni zaroori hai camera image bhejne ke liye
 import { predictDisease } from '../services/api'; 
 
 const Dashboard = () => {
     const [showCamera, setShowCamera] = useState(false);
     const [data, setData] = useState(null);
-    // FIX: Naya loading state add kiya hai
     const [isProcessing, setIsProcessing] = useState(false);
 
-    // FIX: Ab ye function photo ko seedha Mahir ke AI backend par bhejega
     const handleCameraCapture = async (file, imageUrl) => {
         setShowCamera(false);
-        setIsProcessing(true); // Loading screen chalu
+        setIsProcessing(true);
 
         try {
             const response = await predictDisease(file);
-            setData(response.data); // Result aate hi screen par dikhega
+            setData(response.data);
         } catch (error) {
             console.error("Camera prediction error:", error);
             alert("Failed to analyze image. Please try again or check your internet connection.");
         } finally {
-            setIsProcessing(false); // Loading screen band
+            setIsProcessing(false);
         }
     };
 
     return (
-        <div 
-            className="min-h-screen py-10 px-4 md:px-8 font-sans bg-cover bg-center bg-fixed relative"
-            style={{ 
-                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=1920&auto=format&fit=crop')` 
-            }}
-        >
-            {/* 🚀 NAYA LOADING OVERLAY 🚀 */}
+        <div className="min-h-screen py-10 px-4 md:px-8 font-sans relative">
             {isProcessing && (
                 <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
                     <div className="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center border border-emerald-100 animate-in zoom-in-95 duration-300">
@@ -53,7 +45,6 @@ const Dashboard = () => {
 
             <div className="max-w-5xl mx-auto space-y-8 relative z-10">
                 
-                {/* Header & Scanner Launch */}
                 <div className="flex flex-col md:flex-row justify-between items-center bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-gray-200 gap-4">
                     <div>
                         <h1 className="text-3xl font-extrabold text-green-700 tracking-tight">Real-time Leaf Diagnosis</h1>
@@ -67,7 +58,6 @@ const Dashboard = () => {
                     </button>
                 </div>
 
-                {/* Camera Modal */}
                 {showCamera && (
                     <CameraModal 
                         onClose={() => setShowCamera(false)} 
@@ -75,7 +65,6 @@ const Dashboard = () => {
                     />
                 )}
                 
-                {/* Uploader Component */}
                 <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-gray-200">
                     <LeafUploader onUploadSuccess={setData} />
                 </div>
@@ -83,7 +72,6 @@ const Dashboard = () => {
                 {data && (
                     <div className="space-y-6 animate-in fade-in duration-500 mt-8">
                         
-                        {/* Printable/Report Container */}
                         <div id="diagnostic-report" className="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-200 space-y-6">
                             
                             <div className="flex items-center gap-2 border-b pb-4">
@@ -92,8 +80,21 @@ const Dashboard = () => {
                             </div>
 
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                                {/* Left Side: Prediction & Heatmap */}
                                 <div className="lg:col-span-5 space-y-6">
+                                    
+                                    {/* 🚀 WEEK 3: Low Confidence Warning Banner (Tuesday Task) 🚀 */}
+                                    {(data.confidence < 0.60 || data.confidence < 60) && data.confidence !== undefined && (
+                                        <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-xl flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2">
+                                            <AlertTriangle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" />
+                                            <div>
+                                                <h4 className="text-amber-800 font-bold text-sm">Low Confidence Prediction</h4>
+                                                <p className="text-amber-700 text-xs mt-1 leading-relaxed">
+                                                    The AI is unsure about this scan (under 60% confidence). Please take a closer, well-lit photo of the leaf for a more accurate diagnosis.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <PredictionCard result={data} />
                                     
                                     {data.gradcam_heatmap_base64 && (
@@ -104,7 +105,6 @@ const Dashboard = () => {
                                     )}
                                 </div>
 
-                                {/* Right Side: Remediation Tabs */}
                                 <div className="lg:col-span-7">
                                     <h3 className="font-bold text-lg text-slate-800 mb-4">Recommended Action Plan</h3>
                                     <RemediationTab treatmentData={data.remediation} />
@@ -112,9 +112,13 @@ const Dashboard = () => {
                             </div>
                         </div>
                         
-                        {/* PDF Download Button */}
                         <div className="flex justify-end pt-4">
-                            <PdfReportGenerator targetElementId="diagnostic-report" fileName="CropCare_Advisory_Report.pdf" />
+                            {/* WEEK 3: Added data={data} prop for Wednesday PDF Task */}
+                            <PdfReportGenerator 
+                                targetElementId="diagnostic-report" 
+                                fileName="CropCare_Advisory_Report.pdf" 
+                                data={data} 
+                            />
                         </div>
                         
                     </div>
