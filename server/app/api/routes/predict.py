@@ -8,12 +8,13 @@ from app.schemas.prediction import PredictionResponse, PredictionItem
 from app.core.security import limiter
 from app.core.logger import logger
 
-router = APIRouter(prefix="/api", tags=["Prediction"])
+router = APIRouter()
 
 # In-memory SHA-256 caching table
 _INFERENCE_CACHE = {}
 
-@router.post("/predict", response_model=PredictionResponse)
+@router.post("", response_model=PredictionResponse)
+@router.post("/", response_model=PredictionResponse)
 @limiter.limit("30/minute")
 async def predict_crop_disease(
     request: Request,
