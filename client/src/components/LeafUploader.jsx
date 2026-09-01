@@ -13,7 +13,10 @@ const LeafUploader = ({ onUploadSuccess }) => {
       const response = await predictDisease(file);
       onUploadSuccess({ ...response.data, original_url: originalUrl }); // Pass response data and locally generated URL[cite: 2]
     } catch (error) {
-      alert("Error predicting disease.");
+      console.error("Prediction failed:", error);
+      const msg = error.response?.data?.detail || 
+        "Failed to connect to backend server. If using Render, the free instance might be waking up (cold start) or redeploying. Please check server logs and try again.";
+      alert(msg);
     } finally {
       setLoading(false);
     }

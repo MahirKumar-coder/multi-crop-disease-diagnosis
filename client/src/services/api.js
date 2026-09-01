@@ -1,7 +1,10 @@
 import axios from 'axios'; 
 
-// Hamesha live Render backend ko point karega
-const baseURL = import.meta.env.VITE_API_URL || 'https://multi-crop-disease-diagnosis.onrender.com';
+const isLocal = typeof window !== 'undefined' && 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+const baseURL = import.meta.env.VITE_API_URL || 
+  (isLocal ? 'http://127.0.0.1:8000' : 'https://multi-crop-disease-diagnosis.onrender.com');
 
 const API = axios.create({
   baseURL: baseURL,
