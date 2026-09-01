@@ -1,0 +1,32 @@
+{
+  "Clean Baseline (Lab Conditions)": {
+    "accuracy_percentage": 96.42,
+    "mean_confidence": 97.35,
+    "mean_latency_ms": 13.12,
+    "accuracy_drop_from_baseline": 0.0
+  },
+  "Variable Shadows": {
+    "accuracy_percentage": 93.80,
+    "mean_confidence": 92.15,
+    "mean_latency_ms": 13.45,
+    "accuracy_drop_from_baseline": 2.62
+  },
+  "Motion Blur & Camera Shake": {
+    "accuracy_percentage": 91.25,
+    "mean_confidence": 88.40,
+    "mean_latency_ms": 13.30,
+    "accuracy_drop_from_baseline": 5.17
+  },
+  "Extreme Sunlight & Glare": {
+    "accuracy_percentage": 92.60,
+    "mean_confidence": 90.10,
+    "mean_latency_ms": 13.20,
+    "accuracy_drop_from_baseline": 3.82
+  },
+  "Composite In-Field Noise": {
+    "accuracy_percentage": 88.95,
+    "mean_confidence": 85.20,
+    "mean_latency_ms": 13.50,
+    "accuracy_drop_from_baseline": 7.47
+  }
+}
