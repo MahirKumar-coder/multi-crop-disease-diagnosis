@@ -48,6 +48,10 @@ server/venv/
 *.pkl
 *.joblib
 *.weights
+# Allow production models required for Render deployment
+!server/app/models/*.onnx
+!server/app/models/*.onnx.data
+!server/app/models/*.pt
 dataset/
 datasets/
 PlantVillage/

@@ -1,7 +1,8 @@
 import os
 import torch
 import torch.nn as nn
-from torchvision.models import efficientnet_b0, EfficientNet_B0_Weights
+from pathlib import Path
+from torchvision.models import efficientnet_b0
 from app.core.config import settings
 from app.core.logger import logger
 
@@ -30,27 +31,50 @@ class ModelLoaderService:
             cls._instance._initialize_model()
         return cls._instance
 
+    def _resolve_model_path(self, raw_path: str) -> str:
+        current_dir = Path(__file__).resolve().parent
+        candidates = [
+            Path(raw_path),
+            current_dir / ".." / "models" / Path(raw_path).name,
+            current_dir / ".." / "models" / "efficientnet_plant_disease.pt",
+            current_dir / ".." / "models" / "best_efficientnet.pt",
+            current_dir / ".." / "models" / "best_efficientnet_v2.pt",
+            Path("server/app/models") / Path(raw_path).name,
+            Path("app/models") / Path(raw_path).name,
+            Path("server/app/models/efficientnet_plant_disease.pt"),
+            Path("app/models/efficientnet_plant_disease.pt"),
+        ]
+        for c in candidates:
+            if c.exists():
+                return str(c.resolve())
+        return raw_path
+
     def _initialize_model(self):
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Loading EfficientNet inference model on device: {self._device}")
 
-
         model = efficientnet_b0(weights=None)
         in_features = model.classifier[1].in_features
         model.classifier = nn.Sequential(
-            nn.Dropout(p=0.4, inplace=True),
-            nn.Linear(in_features, len(self._class_names))
+            nn.Dropout(p=0.3, inplace=True),
+            nn.Linear(in_features, 512),
+            nn.BatchNorm1d(512),
+            nn.SiLU(),
+            nn.Dropout(p=0.3, inplace=True),
+            nn.Linear(512, len(self._class_names))
         )
 
-        if os.path.exists(settings.MODEL_PATH):
+        resolved_path = self._resolve_model_path(getattr(settings, "MODEL_PATH", "app/models/efficientnet_plant_disease.pt"))
+
+        if os.path.exists(resolved_path):
             try:
-                state_dict = torch.load(settings.MODEL_PATH, map_location=self._device)
+                state_dict = torch.load(resolved_path, map_location=self._device)
                 model.load_state_dict(state_dict)
-                logger.info(f"Loaded weights from {settings.MODEL_PATH}")
+                logger.info(f"Loaded weights from {resolved_path}")
             except Exception as e:
                 logger.warning(f"Failed to load weights from file: {e}, Running with initialized head.")
         else:
-            logger.warning(f"Weights file not found at '{settings.MODEL_PATH}'. Running in test mock mode.")
+            logger.warning(f"Weights file not found at '{resolved_path}'. Running in test mock mode.")
 
         model.to(self._device)
         model.eval()
