@@ -1,108 +1,103 @@
-from fastapi import APIRouter, UploadFile, File, Request, HTTPException, status
-from app.core.security import limiter
+import hashlib
+from fastapi import APIRouter, UploadFile, File, Request, Depends, HTTPException, status
 from app.services.preprocessor import validate_and_preprocess_image
 from app.services.onnx_inference_service import onnx_service
-from app.services.model_service import model_service
-from app.services.gradcam_service import GradCAM
-from app.services.cache_service import cache_service
-from app.api.routes.diseases import disease_db
-from app.schemas.prediction_schema import PredictionResponse, PredictionItem, RemediationPlan
+from app.services.gradcam_service import gradcam_service
+from app.services.knowledge_base_service import kb_service
+from app.schemas.prediction import PredictionResponse, PredictionItem
+from app.core.limiter import limiter
 from app.core.logger import logger
 
-router = APIRouter()
+router = APIRouter(prefix="/api", tags=["Prediction"])
 
-# Target last convolutional block for PyTorch Grad-CAM explanation
-target_conv_layer = model_service.model.features[-1]
-grad_cam_engine = GradCAM(model_service.model, target_conv_layer)
+# In-memory SHA-256 caching table
+_INFERENCE_CACHE = {}
 
-@router.post("", response_model=PredictionResponse, summary="Analyze leaf image and get diagnosis with remedies")
+@router.post("/predict", response_model=PredictionResponse)
 @limiter.limit("30/minute")
-async def predict_leaf_disease(request: Request, file: UploadFile = File(...)):
-    # 1. Validate, Read bytes & Calculate SHA-256 Hash
-    tensor, raw_image = await validate_and_preprocess_image(file)
-    
-    # Read raw bytes for deterministic hashing
+async def predict_crop_disease(
+    request: Request,
+    file: UploadFile = File(...)
+):
+    """
+    Analyzes leaf images with:
+    - Magic-byte & decompression bounds validation
+    - In-memory SHA-256 response caching
+    - Temperature-calibrated ONNX inference
+    - Out-of-distribution (OOD) ambiguous scan warning (<60% confidence)
+    - Grad-CAM explainability and remediation metadata retrieval
+    """
+    # 1. Read buffer for SHA-256 Cache Check
+    contents = await file.read()
     await file.seek(0)
-    raw_bytes = await file.read()
-    image_hash = cache_service.compute_image_hash(raw_bytes)
+    image_hash = hashlib.sha256(contents).hexdigest()
 
-    # 2. Check Image Cache
-    cached_result = cache_service.get(image_hash)
-    if cached_result:
-        cached_response = PredictionResponse(**cached_result)
-        cached_response.cached = True
-        return cached_response
+    if image_hash in _INFERENCE_CACHE:
+        cached_res = _INFERENCE_CACHE[image_hash].copy()
+        cached_res["cached"] = True
+        return cached_res
 
-    # 3. Execute Fast Multi-Threaded ONNX Inference
+    # 2. Validate and Preprocess Image
+    tensor, raw_image = await validate_and_preprocess_image(file)
+
+    # 3. Run Calibrated ONNX Inference
+    diag_result = onnx_service.predict(tensor)
+    
+    primary_pred = diag_result["primary_prediction"]
+    top_3_raw = diag_result["top_k_predictions"]
+    predicted_class_name = primary_pred["class_name"]
+
+    # 4. Parse Crop & Disease Name from Class Identifier
+    if "___" in predicted_class_name:
+        crop_name, disease_clean = predicted_class_name.split("___", 1)
+        crop_name = crop_name.replace("_", " ").title()
+        disease_clean = disease_clean.replace("_", " ").title()
+    else:
+        crop_name = "Unknown"
+        disease_clean = predicted_class_name
+
+    is_healthy = "healthy" in predicted_class_name.lower()
+
+    # 5. Lookup Remediation Knowledge Base
+    kb_record = kb_service.get_disease_details(predicted_class_name)
+    
+    # 6. Generate Grad-CAM Heatmap Overlay
+    heatmap_base64 = None
     try:
-        top_class_id, top_confidence, raw_top3 = onnx_service.predict(raw_image)
+        heatmap_base64 = gradcam_service.generate_base64_heatmap(tensor, primary_pred["class_id"], raw_image)
     except Exception as e:
-        logger.error(f"ONNX inference failed: {e}. Falling back to PyTorch model.")
-        # Fallback to PyTorch
-        tensor_dev = tensor.to(model_service.device)
-        outputs = model_service.model(tensor_dev)
-        import torch.nn.functional as F
-        import torch
-        probs = F.softmax(outputs, dim=1)[0]
-        top3_prob, top3_indices = torch.topk(probs, 3)
-        top_pred_idx = top3_indices[0].item()
-        top_confidence = round(top3_prob[0].item() * 100, 2)
-        top_class_id = model_service.class_names[top_pred_idx]
-        raw_top3 = [
-            {"class_id": model_service.class_names[idx.item()], "confidence": round(p.item() * 100, 2)}
-            for p, idx in zip(top3_prob, top3_indices)
-        ]
+        logger.error(f"Grad-CAM generation failed: {str(e)}")
 
-    # 4. Construct Top-3 Metadata List
-    top_3_list = []
-    for item in raw_top3:
-        c_id = item["class_id"]
-        c_meta = disease_db.get(c_id, {})
-        top_3_list.append(
-            PredictionItem(
-                class_id=c_id,
-                disease_name=c_meta.get("disease_name", c_id.replace("___", " - ")),
-                crop=c_meta.get("crop", c_id.split("___")[0]),
-                confidence=item["confidence"]
-            )
+    # 7. Assemble Structured Response
+    top_3_formatted = [
+        PredictionItem(
+            class_id=item["class_id"],
+            class_name=item["class_name"],
+            confidence=item["confidence"]
         )
+        for item in top_3_raw
+    ]
 
-    # 5. Generate Grad-CAM Heatmap Overlay
-    try:
-        top_idx = model_service.class_names.index(top_class_id)
-        tensor_grad = tensor.to(model_service.device)
-        tensor_grad.requires_grad = True
-        heatmap_base64 = grad_cam_engine.generate_heatmap(tensor_grad, top_idx, raw_image)
-    except Exception as e:
-        logger.warning(f"Grad-CAM generation failed: {e}")
-        heatmap_base64 = None
+    response_payload = {
+        "predicted_class": predicted_class_name,
+        "crop": crop_name,
+        "disease_name": disease_clean,
+        "confidence": primary_pred["confidence"],
+        "is_healthy": is_healthy,
+        "pathogen_type": kb_record.get("pathogen_type") if kb_record else None,
+        "severity": kb_record.get("severity") if kb_record else None,
+        "description": kb_record.get("description") if kb_record else None,
+        "is_confident": diag_result["is_confident"],
+        "status_flag": diag_result["status_flag"],
+        "warning_message": diag_result["warning_message"],
+        "top_3_predictions": top_3_formatted,
+        "remediation": kb_record.get("remediation") if kb_record else None,
+        "gradcam_heatmap_base64": heatmap_base64,
+        "inference_time_ms": diag_result["inference_time_ms"],
+        "cached": False
+    }
 
-    # 6. Retrieve Enriched Disease Knowledge
-    meta = disease_db.get(top_class_id)
-    if not meta:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Pathology data for class '{top_class_id}' not found in database."
-        )
+    # Store in memory cache
+    _INFERENCE_CACHE[image_hash] = response_payload
 
-    response_data = PredictionResponse(
-        predicted_class=top_class_id,
-        crop=meta["crop"],
-        disease_name=meta["disease_name"],
-        scientific_name=meta.get("scientific_name", "N/A"),
-        confidence=top_confidence,
-        is_healthy=meta["is_healthy"],
-        pathogen_type=meta["pathogen_type"],
-        severity=meta["severity"],
-        description=meta["description"],
-        remediation=RemediationPlan(**meta["remediation"]),
-        top_3_predictions=top_3_list,
-        gradcam_heatmap_base64=heatmap_base64,
-        cached=False,
-        image_sha256=image_hash
-    )
-
-    # 7. Store in Cache
-    cache_service.set(image_hash, response_data.model_dump())
-
-    return response_data
+    return response_payload
