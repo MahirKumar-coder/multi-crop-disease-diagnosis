@@ -10,6 +10,7 @@ from app.core.logger import logger
 from app.api.api_router import api_router
 from app.api.api_router import api_router
 from app.core.security import limiter, rate_limit_exceeded_handler
+from app.api.routes import history
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -51,6 +52,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # Include Router
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(history.router)
 
 @app.get("/health", tags=["System"])
 async def health_check():

@@ -5,16 +5,16 @@ from app.services.onnx_inference_service import onnx_service
 from app.services.gradcam_service import gradcam_service
 from app.services.knowledge_base_service import kb_service
 from app.schemas.prediction import PredictionResponse, PredictionItem
-from app.core.security import limiter
+from app.core.limiter import limiter
 from app.core.logger import logger
+from app.services.history_service import history_service
 
-router = APIRouter()
+router = APIRouter(prefix="/api", tags=["Prediction"])
 
 # In-memory SHA-256 caching table
 _INFERENCE_CACHE = {}
 
-@router.post("", response_model=PredictionResponse)
-@router.post("/", response_model=PredictionResponse)
+@router.post("/predict", response_model=PredictionResponse)
 @limiter.limit("30/minute")
 async def predict_crop_disease(
     request: Request,
@@ -78,6 +78,18 @@ async def predict_crop_disease(
         )
         for item in top_3_raw
     ]
+
+    client_ip = request.client.host if request.client else "unknown"
+
+    history_service.log_diagnosis(
+        crop=crop_name,
+        disease_name=disease_clean,
+        confidence=primary_pred["confidence"],
+        is_confident=diag_result["is_confident"],
+        status_flag=diag_result["status_flag"],
+        latency_ms=diag_result["inference_time_ms"],
+        client_ip=client_ip
+    )
 
     response_payload = {
         "predicted_class": predicted_class_name,
