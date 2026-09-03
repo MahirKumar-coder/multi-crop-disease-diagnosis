@@ -7,8 +7,8 @@ from slowapi.errors import RateLimitExceeded
 
 from app.core.config import settings
 from app.core.logger import logger
-from app.api.api_router import api_router
-from app.api.api_router import api_router
+from app.api.routes.health import router as health_router
+from app.api.routes import predict, diseases
 from app.core.security import limiter, rate_limit_exceeded_handler
 from app.api.routes import history
 
@@ -50,8 +50,11 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": "Internal server error occured. Please check server logs."}
     )
 
-# Include Router
-app.include_router(api_router, prefix=settings.API_V1_STR)
+# Include API route modules directly so route registration remains compatible
+# with FastAPI's lazy nested-router representation.
+app.include_router(health_router, prefix=f"{settings.API_V1_STR}/health")
+app.include_router(predict.router, prefix=settings.API_V1_STR)
+app.include_router(diseases.router, prefix=f"{settings.API_V1_STR}/diseases", tags=["Disease Knowledge Base"])
 app.include_router(history.router)
 
 @app.get("/health", tags=["System"])

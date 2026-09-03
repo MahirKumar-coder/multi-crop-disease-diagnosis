@@ -20,8 +20,15 @@ class ONNXInferenceService:
         return cls._instance
 
     def _initialize_session(self):
-        self.model_path = getattr(settings, "ONNX_MODEL_PATH", "app/models/efficientnet_plant_disease.onnx")
-        self.class_indices_path = getattr(settings, "CLASS_INDICES_PATH", "ai_engine/data/class_indices.json")
+        server_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        model_path = getattr(settings, "ONNX_MODEL_PATH", "app/models/efficientnet_plant_disease.onnx")
+        class_indices_path = getattr(settings, "CLASS_INDICES_PATH", "app/data/class_indices.json")
+        self.model_path = model_path if os.path.isabs(model_path) else os.path.join(server_root, model_path)
+        self.class_indices_path = (
+            class_indices_path
+            if os.path.isabs(class_indices_path)
+            else os.path.join(server_root, class_indices_path)
+        )
         
         # 1. Initialize ONNX Runtime Session
         opts = ort.SessionOptions()

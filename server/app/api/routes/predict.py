@@ -9,7 +9,7 @@ from app.core.limiter import limiter
 from app.core.logger import logger
 from app.services.history_service import history_service
 
-router = APIRouter(prefix="/api", tags=["Prediction"])
+router = APIRouter(tags=["Prediction"])
 
 # In-memory SHA-256 caching table
 _INFERENCE_CACHE = {}
