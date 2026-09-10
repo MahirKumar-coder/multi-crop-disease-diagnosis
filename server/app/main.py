@@ -11,6 +11,10 @@ from app.api.routes.health import router as health_router
 from app.api.routes import predict, diseases
 from app.core.security import limiter, rate_limit_exceeded_handler
 from app.api.routes import history
+from contextlib import asynccontextmanager
+import numpy as np
+from app.services.onnx_inference_service import onnx_service
+from app.core.logger import logger
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -60,3 +64,20 @@ app.include_router(history.router)
 @app.get("/health", tags=["System"])
 async def health_check():
     return {"status": "online", "version": settings.VERSION}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+
+    logger.info("Initializing ONNX execution provider and running graph pre-warming...")
+    try:
+
+        dummy_tensor = np.zeros((1, 3, 224, 224), dtype=np.float32)
+        _ = onnx_service.predict(dummy_tensor)
+        logger.info("✅ ONNX execution graph successfully pre-warmed. Cold-start latency eliminated.")
+    except Exception as e:
+        logger.error(f"Startup pre-warming encountered an error: {str(e)}")
+    
+    yield
+    # Shutdown logic (if any)
+
+app = FastAPI(title="Multi-Crop Disease Diagnosis API", lifespan=lifespan)
