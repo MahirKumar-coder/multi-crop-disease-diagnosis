@@ -5,7 +5,7 @@ from app.services.onnx_inference_service import onnx_service
 from app.services.gradcam_service import gradcam_service
 from app.services.knowledge_base_service import kb_service
 from app.schemas.prediction import PredictionResponse, PredictionItem
-from app.core.limiter import limiter
+from app.core.security import limiter
 from app.core.logger import logger
 from app.services.history_service import history_service
 
@@ -15,6 +15,7 @@ router = APIRouter(tags=["Prediction"])
 _INFERENCE_CACHE = {}
 
 @router.post("/predict", response_model=PredictionResponse)
+@router.post("/predict/", response_model=PredictionResponse)
 @limiter.limit("30/minute")
 async def predict_crop_disease(
     request: Request,
