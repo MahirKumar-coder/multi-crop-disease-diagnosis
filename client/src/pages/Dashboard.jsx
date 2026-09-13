@@ -107,7 +107,23 @@ const Dashboard = () => {
 
                                 <div className="lg:col-span-7">
                                     <h3 className="font-bold text-lg text-slate-800 mb-4">Recommended Action Plan</h3>
-                                    <RemediationTab treatmentData={data.remediation} />
+                                    {((data.confidence >= 60 || data.confidence >= 0.60) && data.is_confident !== false) ? (
+                                        <RemediationTab treatmentData={data.remediation} />
+                                    ) : (
+                                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 text-center space-y-3">
+                                            <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                                                🍃?
+                                            </div>
+                                            <h4 className="text-base font-bold text-slate-800">No Prescription Generated</h4>
+                                            <p className="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
+                                                The AI detected an out-of-distribution or non-crop image (confidence is below 60%). 
+                                                To prevent hazardous or incorrect fertilizer/fungicide use, treatment plans are withheld until a clear leaf photo is uploaded.
+                                            </p>
+                                            <p className="text-xs text-slate-400">
+                                                Please capture a clear, well-lit photo of a supported crop leaf (e.g., Tomato, Apple, Corn, Potato, Grape).
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
