@@ -67,9 +67,9 @@ class ONNXInferenceService:
         else:
             logger.warning(f"ONNX Model file not found at {self.model_path}. Will use PyTorch fallback.")
 
-        # 2. Initialize Calibrated Filter (T=0.50, Threshold=60%)
+        # 2. Initialize Calibrated Filter (T=0.85, Threshold=60%)
         self.calibrator = CalibratedClassifierFilter(
-            temperature=0.50,
+            temperature=0.85,
             confidence_threshold=0.60,
             class_mapping_path=self.class_indices_path
         )
