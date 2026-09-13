@@ -94,7 +94,7 @@ class CalibratedClassifierFilter:
     """
     def __init__(
         self,
-        temperature: float = 1.15,
+        temperature: float = 0.50,
         confidence_threshold: float = 0.60,
         class_mapping_path: Optional[str] = "../data/class_indices.json"
     ):
